@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+    --cardinal: #e66161;
+    /* red */
+    --pumpkin: #d97007;
+    /* orange */
+    --dandelion: #ffcc00;
+    /* yellow */
+    --kiwi: #069420;
+    /* green */
+    --sea: #4c66e0;
+    /* blue */
+    --plum: #A16AE6;
+    /* purple */
+    --almond: #a52a2a;
+    /* brown */
+    --rabbit: #c3c3c3;
+    /* gray */
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+#header {
+    color: white;
+    font-size: 64px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+.main {
+    position: relative;
+    /* width: 1822px; */ 
+    /* height: 794px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* left: 75px; */
+    /* top: 162px; */
+}
+
+.Rectangle1 {
+    position: /* absolute */ relative;
+    width: 885px;
+    height: 380.5px;
+    /* left: 37.5px; */
+    /* top: 97.5px; */
+    border-radius: 25px;
+    overflow: hidden;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+}
+
+.Rectangle1:nth-child(1) { background: var(--sea); }
+.Rectangle1:nth-child(2) { background: var(--plum); }
+.Rectangle1:nth-child(3) { background: var(--cardinal); }
+
+.Ellipse1 {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    top: -10px;
+    /* left: 775px; */
+    right: -20px;
+    border-radius: 9999px;
+    background: #D9D9D9;
+    mix-blend-mode: soft-light;
+    clip-path: rect(90px);
+}
+
+#Image1 {
+    z-index: 0;
+    position: relative;
+    width: 75%;
+    height: 75%;
+    float: left;
+}
+
+/*
+#Image1:active  {
+    transition: all 2s;
+    position: absolute;
+    animation: center;
+    animation-duration: 3s;
+}
+
+@keyframes center {
+    0% {
+        top: 0%;
+        left: 0%;
+        z-index: 1;
+    }
+    50% {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+    100% {
+        z-index: 1;
+        transform: scale(200);
+    }
+
+}*/
+
+.Container {
+    position: absolute;
+    padding-left: 1%;
+    font-size: larger;
+    font-weight: bold;
+    width: 30%;
+    margin-left: 55%;
+    border-radius: 9999px;
+    background-color: var(--rabbit);
+}
+
+.Container:nth-child(1) { margin-top: 5%; }
+.Container:nth-child(2) { margin-top: 10%; }
+.Container:nth-child(3) { margin-top: 15%; }
+
+/* 
+    (8/7/2023) THIS NEEDS TO BE LOOKED AT AGAIN
+*/
+/* 
+    "This is a nasty hack, but it works."
+    - Ronald Reagan (probably)
+*/
+@media (max-width: 768px) {
+
+    #header { font-size: 32px; } /* hmm... make this more responsive */
+    #Image1 { display: none; }
+
+    .Rectangle1 {
+        /* top: 0px; */
+        /* left: -65px; */
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        width: 432px; /* width: 95%; */
+        height: 230px;
+    }
+
+    .Ellipse1 {
+        left: 80%;
+        top: -10px;
+        width: 96px;
+        height: 96px;
+    }
+
+    .Container:nth-child(1) { margin-top: 10%; }
+    .Container:nth-child(2) { margin-top: 20%; }
+    .Container:nth-child(3) { margin-top: 30%; }
+    
+    .Container {
+        width: 96%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    .main {
+        /* width: 576px; */
+        /* height: 794px; */
+    }
+}

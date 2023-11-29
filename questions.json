@@ -1,0 +1,100 @@
+{
+    "questions": [
+        {
+            "id": "000000001",
+            "category": 1,
+            "question": "Assume a variable <code>x</code> with a value of <code>[0,0,0,0]</code> exsists. Identify which choice causes an error.",
+            "choices": [
+                "<code>x[1]&#160;=&#160;1</code>",
+                "<code>x[2]&#160;=&#160;2</code>",
+                "<code>x[3]&#160;=&#160;3</code>",
+                "<code>x[4]&#160;=&#160;4</code>"
+            ],
+            "correct": 3
+        },
+        {
+            "id": "000000002",
+            "category": 2,
+            "question": "Which loop is guaranteed to run at least one time?",
+            "choices": [
+                "<code style='color: green;'>repeat</code>",
+                "<code style='color: green;'>for</code>",
+                "<code style='color: green;'>while</code>",
+                "None of the Above"
+            ],
+            "correct": 0
+        }, 
+        {
+            "id": "000000003",
+            "category": 2,
+            "question": "Which loop can be used for iterating over arrays?",
+            "choices": [
+                "<code style='color: green;'>for</code>",
+                "<code style='color: green;'>while</code>",
+                "<code style='color: green;'>repeat</code>",
+                "All of the Above"
+            ],
+            "correct": 3
+        },
+        {
+            "id": "000000004",
+            "category": 3,
+            "question": "Which data type should you use with decimal numbers in Swift?",
+            "choices": [
+                "<code style='color: green;'>Float</code>",
+                "<code style='color: green;'>Double</code>",
+                "<code style='color: green;'>Int</code>",
+                "All of the Above"
+            ],
+            "correct": 1
+        },
+        {
+            "id": "000000005",
+            "category": 4,
+            "question": "Which access control modifier is the most restrictive?",
+            "choices": [
+                "<code style='color: green;'>public</code>",
+                "<code style='color: green;'>private</code>",
+                "<code style='color: green;'>internal</code>",
+                "<code style='color: green;'>fileprivate</code>"
+            ],
+            "correct": 1
+        },
+        {
+            "id": "000000006",
+            "category": 0,
+            "question": "Given the parameter int is an Integer and given str is a String, which function will prints the two values concatenated together?",
+            "choices": [
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"\\(int)\"&#160;+&#160;str)&#160;}</code>",
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int&#160;+&#160;str)&#160;}</code>",
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"(int)(str)\")&#160;}</code>",
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int.append(str))&#160;}</code>"
+            ],
+            "correct": 0
+        },
+        {
+            "id": "000000007",
+            "category": 0,
+            "question": "Which of the following is not a boolean?",
+            "choices": [
+                "<code style='color: green;'>true</code>",
+                "<code style='color: green;'>false</code>",
+                "<code style='color: green;'>nil</code>",
+                "All are booleans"
+            ],
+            "correct": 2
+        },
+        {
+            "id": "000000008",
+            "category": 1,
+            "question": "What is the type of the following variable? <code>var&#160;fruits&#160;=&#160;[\"Watermelon\",&#160;\"Mango\",&#160;\"Apple\"]</code>",
+            "choices": [
+                "<code style='color: green;'>[String]</code>",
+                "<code style='color: green;'>[Int]</code>",
+                "<code style='color: green;'>[Double]</code>",
+                "<code style='color: green;'>[Bool]</code>"
+            ],
+            "correct": 0
+        }
+    ]
+}

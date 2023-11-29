@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    -->
+    <!-- FIXME: Make every page use this notice. -->
+    <script>
+        window.onload=function(){
+            var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+            if (mobile) {
+                alert("This webpage looks best on Desktop. Things may look a little off.");              
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+        :not([class]) {
+            font-family: "Inter", sans-serif;
+        }
+        h1:not([class]) {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        h2:not([class]) {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        h3:not([class]) {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        ul:not([class]) {
+            list-style-position: inside;
+            list-style-type: disc;
+        }
+        
+        ol:not([class]) {
+            list-style-position: inside;
+            list-style-type: decimal;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]">
+    {% include "blocks/header.html" %}
+    <!-- {# <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> #} -->
+    <div class="container mx-auto py-8">
+        <article class="bg-white rounded-lg shadow-md p-6 prose max-w-full">
+            <h1 class="text-3xl font-semibold text-gray-800">{{ title }}</h1>
+            <div class="flex flex-row mt-2">
+                <p class="text-gray-500 pr-2">Published on {{ date }}</p>
+                <p class="text-gray-500 pl-2">{{ name }}</p>
+            </div>
+            <br>
+            {% if language == "en" %}
+            <div class="flex inline-flex p-6">
+                <p class="italic text-md">This article is also offered in:</p>
+                <a href="article/ru"><b class="pl-2">Русский</b></a>
+                <a href="article/ar"><b class="pl-2">العربية</b></a>
+            </div>
+            {% endif %}
+            <!--
+            <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+                <p class="font-bold">Informational message</p>
+                <p class="text-sm">This article contains English words and or numbers.</p>
+            </div>
+            -->
+            <br>
+            <div id="content">
+                {# {% filter indent(width=16) %} #}
+                {{ contents|safe }}
+                {# {% endfilter %} #}
+            </div>
+        </article>
+    </div>
+</body>
+</html>

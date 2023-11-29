@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- THIS IS NOT RESPONSIVE ON MOBILE -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/course.css') }}">
+</head>
+<body class="bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]"> <!-- class="light:bg-white dark:bg-slate-900" -->
+    <!-- {# <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> #} -->
+    {% include "blocks/header.html" %}
+    <div class="main">
+        {% for x in range(Unit|length) %}
+            {% include "blocks/course.html"%}
+        {% endfor %}
+    </div>
+</body>
+</html>

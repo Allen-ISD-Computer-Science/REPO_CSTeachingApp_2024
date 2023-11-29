@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- THIS IS NOT RESPONSIVE ON MOBILE -->
+  <title>{{ title }}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+    body {
+      /* background-color: #2a2b2b; */
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="light bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]">
+  {% include "blocks/header.html" %}
+  <div class="inset-x-0 bottom-48 grid pl-[5%] sm:grid-cols-2 gap-4">
+    <div>
+      <br>
+      <div class="bg-gradient-to-r from-red-500 to-red-600 w-[95%] lg:w-[76%] rounded-lg" onclick="window.location.href='./test'">
+        <div class="flex">
+          <picture class="ml-4 mt-4 mb-4">
+            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4aa/512.webp" type="image/webp">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4aa/512.gif" alt="💪" width="96" height="96">
+          </picture>
+          <div class="ml-8 lg:ml-16 mt-12">
+            <h1 class="text-xl lg:text-4xl font-black"><b>Practice</b></h1>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="bg-gradient-to-r from-orange-500 to-orange-600 w-[95%] lg:w-[76%] rounded-lg" onclick="window.location.href='./learn'">
+        <div class="flex">
+          <picture class="ml-4 mt-4 mb-4">
+            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4a1/512.webp" type="image/webp">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4a1/512.gif" alt="💡" width="96" height="96">
+          </picture>
+          <div class="ml-8 lg:ml-16 mt-12">
+            <h1 class="text-xl lg:text-4xl font-black"><b>Course</b></h1>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="bg-gradient-to-r from-green-500 to-green-600 w-[95%] lg:w-[76%] rounded-lg" onclick="window.location.href='./experimental'">
+        <div class="flex">
+          <picture class="ml-4 mt-4 mb-4">
+            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f3d5_fe0f/512.webp" type="image/webp">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f3d5_fe0f/512.gif" alt="🏕" width="96" height="96">
+          </picture>
+          <div class="ml-8 lg:ml-16 mt-12">
+            <h1 class="text-xl lg:text-4xl font-black"><b>Social</b></h1>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!-- FIXME: Remove this when Coding Challenges are merged into normal practices. -->
+      <!-- IDEA: Change this to Statistics just make it blue. -->
+      <div class="bg-gradient-to-r from-blue-500 to-blue-600 w-[95%] lg:w-[76%] rounded-lg" onclick="window.location.href='./stats'">
+        <div class="flex">
+          <picture class="ml-4 mt-4 mb-4">
+            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f52e/512.webp" type="image/webp">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f52e/512.gif" alt="🔮" width="96" height="96">
+          </picture>
+          <div class="ml-8 lg:ml-16 mt-12">
+            <h1 class="text-xl lg:text-4xl font-black"><b>Statistics</b></h1>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div>
+      <div class="flex flex-col items-center">
+        <br>
+        <div class="pr-6 w-[95%] lg:w-[76%]">
+          <div class="mt-6 flex flex-col items-center">
+            <h1 class="text-2xl mb-6">Suggested for you</h1>
+            {% filter indent(width=8) %}
+            {% set name = ReccomendedUser.name %}
+            {% set username = ReccomendedUser.username %}
+            {% include "blocks/user.html" %}
+            {% endfilter %} 
+            <br>
+            <h1 class="text-2xl mb-6">Advertisment</h1>
+            <img src="{{ url_for('static', filename='imgs/people/live.png') }}" width="256" height="256">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <footer class="flex justify-center ">
+    <span>Copyright © Leon 2023</span>
+  </footer>
+</body>
+</html>

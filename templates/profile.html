@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <title>Veneficus - Profile</title> -->
+  <title>{{ title }}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="light bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]">
+    {% include "blocks/header.html" %}
+    {% filter indent(width=2) %}
+    {% include "blocks/user.html"%}
+    {% endfilter %}
+</body>
+</html>

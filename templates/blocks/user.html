@@ -1,0 +1,30 @@
+{% block content %}
+    <!-- nasty hack -->
+    <div {% if not card %} onclick="document.location = '/user/{{username}}';" {% endif %} class="relative bg-white px-6 {% if card %}pt-10 pb-8{% else %}pt-4{% endif %} shadow-xl ring-1 ring-gray-900/5 {# sm:mx-auto sm:max-w-lg #} sm:rounded-lg sm:px-10">
+        <div class="flex items-center flex-row pb-4">
+            <img class="rounded-full" src="{{ url_for('static', filename='imgs/people/david.jpeg') }}">
+            <div class="flex flex-col">
+                {% if not card %} 
+                <h1 class="ml-4 text-4xl">{{ name }}</h1>
+                {% else %}
+                <div class="flex flex-row">
+                    <h1 class="ml-4 text-4xl">{{ name }}</h1>
+                    <!-- FIXME: Make this button do something -->
+                    <!-- <button class="mt-1 ml-4 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Add Freind</button> -->
+                    <button class="mt-1 ml-4 px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm">Add Freind</button>
+                </div>
+                {% endif %}
+                <div class="flex flex-row">
+                    <h1 class="ml-4 text-gray-400">@{{ username }}</h1>
+                </div>
+            </div>
+        </div>
+        {% if card %}
+        <hr>
+        <br>
+        <h1 class="text-lg">Computer Science Teacher.</h1>
+        <br>
+        <h1 class="text-sg">Joined: 8/1/2023</h1>
+        {% endif %}
+    </div>
+{% endblock content %}

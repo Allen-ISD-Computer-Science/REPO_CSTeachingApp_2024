@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Monaco Editor -->
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/editor.js') }} "></script>
+    <!-- End Monaco Editor -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+	{% include "blocks/header.html" %}
+	<div class="bg-gray-100 flex flex-col justify-center">
+		<div id="progress" class="h-3 relative max-w-xl rounded-full overflow-hidden">
+			<div class="w-full h-full bg-gray-200 absolute"></div>
+			<div id="bar" class="h-full bg-green-500 relative w-0"></div>
+		</div>
+        <div id="question" class="relative px-4 py-10 bg-white shadow-lg sm:rounded-1xl sm:p-20">
+            <h3 class="text-4xl">Fix the Code</h3>
+            <p class="question">{{ prompt|safe }}</p>
+            <br>
+            <div>
+                <!-- Monaco Editor Implementation -->
+                <div id="container" style="width:100%;height:33.33vh;"></div>
+                <script>
+                    // https://authzed.com/blog/show-and-tell
+                    var code = `{{ code|safe }}`;
+                    globalThis.x = new IDE('swift', 'vs-light', code); // vs-dark -> vs-light
+                    function run() { 
+                        let elementSelector = document.getElementById("check")
+                        elementSelector.classList.replace("bg-green-600", "bg-amber-500")
+                        elementSelector.classList.replace("shadow-[0_5px_0px_rgb(21,128,61)]", "shadow-[0_5px_0px_rgb(217,119,6)]")
+                        elementSelector.innerText = "Checking..."
+                        // Submission Code
+                        new Promise((resolve) => {
+                            let m = globalThis.x.submit();
+                            resolve(m)
+                        }).then((value) => {
+                            console.log(value == "All Good!")
+                            elementSelector.classList.replace("bg-amber-500", "bg-green-600")
+                            elementSelector.classList.replace("shadow-[0_5px_0px_rgb(217,119,6)]", "shadow-[0_5px_0px_rgb(21,128,61)]")
+                            elementSelector.innerText = "Next"
+                        })
+                    }
+                </script>
+                <!-- End Monaco Editor Implementation -->
+                <button onclick="run()" id="check" class="w-[100%] py-3 bg-green-600 rounded-lg shadow-[0_5px_0px_rgb(21,128,61)]">Check</button>
+                <!-- <button onclick="run()" id="check" class="w-[100%] py-3 bg-green-600 rounded-lg shadow-[0_5px_0px_rgb(21,128,61)]">Check</button> -->
+                <!-- <button class="min-w-fit p-2 max-w-[25%] py-2 bg-gray-100 rounded-lg shadow-[0_5px_0px_rgb(229,231,235)]"><code>repeat</code></button> -->
+            </div>
+            <br>
+        </div>
+    </div>
+</body>
+</html>

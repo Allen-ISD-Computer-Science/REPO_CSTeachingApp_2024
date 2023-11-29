@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <meta charset="UTF-8">
+  <!-- Monaco Editor Dependencies -->
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/editor/editor.main.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+  <script src="{{ url_for('static', filename='scripts/editor.js') }} "></script>
+  <!-- End Monaco Editor Dependencies -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+</head>
+<body class="min-h-screen">
+    <div>
+      <header class="flex items-stretch">
+        <img src="{{ url_for('static', filename='imgs/extras/logo.svg') }}" width="128" height="128">
+        <div class="flex items-center">
+          <a href="/login">Login</a>
+        </div>
+      </header>
+      <div>
+        <div class="flex bg-[#9DBBF8] mt-4 pb-4 justify-center items-center">
+          <!-- FIXME: Make this animated. -->
+          <img style="filter: drop-shadow(30px 10px 4px gray);" src="/static/imgs/extras/brandbird-iphone-14.png" class="rotate-12" width="384" height="384">
+        </div>
+        <div class="px-6 flex bg-[#748EC3] items-center">
+          <div class="p-12 flex flex-col">
+            <h1 class="text-2xl lg:text-4xl lg:text- opacity-100"><b>Simplicity.</b></h1>
+            <h1 class="text-2xl lg:text-4xl opacity-80"><b>Sencillez.</b></h1>
+            <h1 class="text-2xl lg:text-4xl opacity-60"><b>Простота.</b></h1>
+            <h1 class="text-2xl lg:text-4xl opacity-40"><b>بساطة</b></h1>
+            <h1 class="text-xl lg:text-4xl opacity-20"><b>シンプルさ</b></h1>
+          </div>
+          <h1 class="text-base lg:text-5xl">However you say it, <b><mark>Simplicity above all.</mark></b></h1>
+        </div>
+      </div>
+      <div>
+        <div class="bg-[#F6F6F6] p-6 grid sm:grid-cols-2 gap-8">
+          <!-- FIXME: Put something else here instead -->
+          <!-- class='filter: drop-shadow(30px 10px 4px #4444dd);' -->
+          <img class="flex mx-[23.5%]" src="{{ url_for('static', filename='imgs/extras/swift.png') }}" width="50%" height="50%">
+          <div class="pt-[2.5%]">
+            <br class="lg:invisible">
+            <h1 class="text-6xl p-16 py-0">Learn Swift</h1>
+            <br>
+            <blockquote class="p-16 pt-2 pb-0">
+              <p class="text-sm lg:text-base">"Announced in 2014, the Swift programming language has quickly become one of the fastest growing languages in history. Swift makes it easy to write software that is incredibly fast and safe by design."</p>
+            </blockquote>
+            <br>
+            <figcaption class="p-16 pt-0 pb-0">
+              <a href="https://www.swift.org/" class="text-lg text-blue-300">swift.org</a>
+            </figcaption>
+            <!-- FIXME: Make this button do something -->
+            <div class="p-14 pt-7 pb-0">
+              <button class="px-8 py-4 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Learn More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <img class="flex mx-[23.5%]" src="{{ url_for('static', filename='imgs/extras/Untitled-9.svg') }}" width="50%" height="50%"> -->
+    <!-- <img style="float: left;" class="rounded-[5%] w-1/2 h-1/2 m-0" src="./static/imgs/ide.svg"> -->
+    <div class="lg:flex p-6 grid sm:grid-cols-2 gap-8">
+      <img src="{{ url_for('static', filename='imgs/merlin.svg') }}">
+      <div class="py-[5%]">
+        <div>
+          <div>
+            <br>
+            <div class="flex">
+              <picture>
+                <!-- https://googlefonts.github.io/noto-emoji-animation/ -->
+                <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.webp" type="image/webp">
+                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif" alt="🚀" width="64" height="64">
+              </picture>
+              <h1 class="text-3xl pl-[14px] pt-[18px]">Go above and Beyond</h1>
+            </div>
+            <p>No matter where you are we should have something for you.</p>
+          </div>
+          <br>
+          <div>
+            <div class="flex">
+              <picture>
+                <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f331/512.webp" type="image/webp">
+                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f331/512.gif" alt="🌱" width="64" height="64">
+              </picture>
+              <h1 class="text-3xl pl-[14px] pt-[18px]">Grow your understanding</h1>
+            </div>
+            <!-- Think of something better to put here. l-->
+            <p>We explain how things work in a thorough way.</p>
+          </div>
+          <br>
+          <div>
+            <div class="flex">
+              <picture>
+                <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f30d/512.webp" type="image/webp">
+                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f30d/512.gif" alt="🌍" width="64" height="64">
+              </picture>
+              <h1 class="text-3xl pl-[14px] pt-[18px]">Orbit where you wan't to</h1>
+            </div>
+            <p>Annoyed at a concept? Choose something else to work on instead.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!--
+      <div class="grid grid-flow-col grid-rows-2 grid-cols-3 gap-8">
+        <div class="flex flex-row m-8">
+          <img class="rounded-lg w-64 h-64 ml-4" src="https://tailwindcss.com/_next/static/media/1.4985e539.jpg">
+          <img class="rounded-lg w-64 h-64 ml-4" src="https://tailwindcss.com/_next/static/media/5.e8ff4aa4.jpg">
+        </div>
+      </div>
+    -->
+    <div class="bg-[#3C3744] w-full">
+      <footer class="text-white">
+        <br>
+        <span class="pl-[72px]">© Copyright 2023 Leon</span>
+        <div class="flex p-12">
+          <section class="flex flex-col px-6">
+            <h1 class="text-2xl bold">Important</h1>
+            <br>
+            <span>Terms and Conditions</span>
+            <span>Privacy Policy</span>
+            <!-- <span>Report an Account</span> -->
+            <!-- <span>Support</span> -->
+          </section>
+          <section class="flex flex-col px-6">
+            <h1 class="text-2xl bold">Other Stuff</h1>
+            <br>
+            <span>About Us</span>
+            <span>Our Blog</span>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

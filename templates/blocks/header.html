@@ -1,0 +1,6 @@
+{% block content %}
+    <header class="flex items-stretch">
+        <img onclick="window.location.href = '/';" src="{{ url_for('static', filename='imgs/extras/logo.svg') }}" width="128" height="128">
+        <img src="{{ url_for('static', filename='imgs/people/david.jpeg') }}" class="absolute w-16 h-16 top-0 right-0 mt-6 mr-6 rounded-full">
+    </header>
+{% endblock content %}

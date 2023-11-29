@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+/* code { font-family: 'JetBrains Mono', monospace; } */
+
+.question {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+#check {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+#check:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+input[type="radio"]:after {
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    position: relative;
+    background-color: #535353;
+    content: "";
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type="radio"]:checked:after {
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    position: relative;
+    background-color: #4F46E5;
+    content: "";
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+/* SVG */
+/*
+animated-check {
+    height: 10em;
+    width: 10em;
+}
+*/
+
+.animated-check path {
+    fill: none;
+    stroke: #7ac142;
+    stroke-width: 4;
+    stroke-dasharray: 23;
+    stroke-dashoffset: 23;
+    animation: draw 1s linear forwards;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
