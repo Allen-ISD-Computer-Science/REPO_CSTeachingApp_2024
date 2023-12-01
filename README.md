@@ -33,7 +33,10 @@ A primary goal of this project is to accommodate as many Computer Science studen
 
 - `(Product Manager)` Leon Slavin 
     - [GitHub](http://github.com/KingUndeadCodes/)
-    - [Digital Portfolio](https://codermerlin.academy/users/leon-slavin/Digital%20Portfolio/aboutme.html)
+    - [Digital Portfolio](https://codermerlin.academy/users/leon-slavin/Digital%20Portfolio)
+- `(Project Manager)` Omar Abuzaid
+  - [GitHub](https://github.com/Omar2we4/) 
+  - [Digital Portfolio](https://codermerlin.academy/users/omar-abuzaid/Digital%20Portfolio)
 
 <hr>
 
