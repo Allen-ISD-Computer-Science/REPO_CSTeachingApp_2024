@@ -29,6 +29,12 @@ A primary goal of this project is to accommodate as many Computer Science studen
 
 *Features such as Language Translations for articles are a prime example of our commitment to Inclusivity.*
 
+# Roles
+
+- `(Product Manager)` Leon Slavin 
+    - [GitHub](http://github.com/KingUndeadCodes/)
+    - [Digital Portfolio](https://codermerlin.academy/users/leon-slavin/Digital%20Portfolio/aboutme.html)
+
 <hr>
 
 # Getting Started
