@@ -3,9 +3,33 @@
   <img align="left" src="./static/imgs/extras/logo.svg" width="45%">
 </header>
 
+<!-- 
 # About Veneficus
 The word Veneficus means Wizard in Latin. \
 The goal of Veneficus is to teach programming in a "magical" way.
+-->
+
+# Our Vision
+
+Our vision is to offer a comfortable, informative and inclusive learning experience for CS students.
+
+## Comfortability
+
+One of the very things this project seeks to establish is that the students are the ones in control of their learning. And that nothing has consequences unless explicitly consented to. 
+
+*Features such as Unlimited Retakes are prime examples of our commitment to comfortability.*
+
+## Informativeness
+
+It's critical that you thoroughly explain a concept but it's arguably more critical that things be explained as understandable and simple as possible. 
+
+## Inclusivity
+
+A primary goal of this project is to accommodate as many Computer Science students as possible. Everyone should have an equal right to have the same high quality education as everyone else. 
+
+*Features such as Language Translations for articles are a prime example of our commitment to Inclusivity.*
+
+<hr>
 
 # Getting Started
 
