@@ -37,6 +37,9 @@ A primary goal of this project is to accommodate as many Computer Science studen
 - `(Project Manager)` Omar Abuzaid
   - [GitHub](https://github.com/Omar2we4/) 
   - [Digital Portfolio](https://codermerlin.academy/users/omar-abuzaid/Digital%20Portfolio)
+- `(UI/UX Designer)` Brian Li
+  - [GitHub](https://github.com/Frostfire312)
+  - [Digital Portfolio](https://codermerlin.academy/users/brian-li/Digital%20Portfolio)
 
 <hr>
 
