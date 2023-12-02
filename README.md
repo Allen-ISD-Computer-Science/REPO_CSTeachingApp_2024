@@ -41,8 +41,9 @@ A primary goal of this project is to accommodate as many Computer Science studen
   - [GitHub](https://github.com/Frostfire312)
   - [Digital Portfolio](https://codermerlin.academy/users/brian-li/Digital%20Portfolio)
 - `(Release Manager)` Luke Allen
-  -  [GitHub](https://github.com/Luke14allen)
-  -[Digital Portfolio](https://codermerlin.academy/users/luke-allen/Digital%20Portfolio)
+  - [GitHub](https://github.com/Luke14allen)
+  - [Digital Portfolio](https://codermerlin.academy/users/luke-allen/Digital%20Portfolio)
+
 <hr>
 
 # Getting Started
