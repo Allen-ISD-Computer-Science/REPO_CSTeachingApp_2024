@@ -37,6 +37,10 @@
             font-size: 18px;
             font-weight: bold;
         }
+        h4:not([class]) {
+            font-size: 17px; /* FIXME: This doesn't really make sense, oh well */
+            font-weight: bold;
+        }
         ul:not([class]) {
             list-style-position: inside;
             list-style-type: disc;
@@ -58,12 +62,16 @@
                 <p class="text-gray-500 pr-2">Published on {{ date }}</p>
                 <p class="text-gray-500 pl-2">{{ name }}</p>
             </div>
+            {% if language == "en" and language_list|length != 0 %}
             <br>
-            {% if language == "en" %}
             <div class="flex inline-flex p-6">
                 <p class="italic text-md">This article is also offered in:</p>
+                {% if "ru" in language_list %}
                 <a href="article/ru"><b class="pl-2">Русский</b></a>
+                {% endif %}
+                {% if "ar" in language_list %}
                 <a href="article/ar"><b class="pl-2">العربية</b></a>
+                {% endif %}
             </div>
             {% endif %}
             <!--

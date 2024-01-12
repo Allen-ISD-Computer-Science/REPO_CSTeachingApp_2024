@@ -24,6 +24,7 @@ import random
 import json
 import yaml
 import time
+import enum
 import sys
 import os
 
@@ -61,6 +62,37 @@ class User(UserMixin, db.Model):
     # picture = db.Column(db.String(500)) # URL
     # time = db.Column(db.Time)
     # friends = db.Column()
+
+class Lesson(db.Model):
+
+    '''
+    class LessonStages(enum.Enum):
+        Stage_0 = 0 # Not started
+        Stage_1 = 1 # Lesson
+        Stage_2 = 2 # Quiz
+        Stage_3 = 3 # Finished
+
+    @staticmethod
+    def question_picker(): return random.choice(questions)
+    '''
+
+    @staticmethod
+    def commit():
+        db.session.add(
+            Lesson(
+                articleOne="test",
+                articleTwo="test",
+                articleThree="test"
+            )
+        )
+        db.session.commit()
+
+    # Format: [name, link]
+
+    id = db.Column(db.Integer, primary_key=True)
+    articleOne = db.Column(db.String(256))
+    articleTwo = db.Column(db.String(256))
+    articleThree = db.Column(db.String(256))
 
 db.init_app(app)
 
@@ -157,9 +189,10 @@ def article(article_name, language = "en"):
         case "en": contents = open(f"articles/{article_name}/contents.md", "r").read()
         case "ru": contents = open(f"articles/{article_name}/languages/russian.md", "r").read()
         case "ar": contents = open(f"articles/{article_name}/languages/arabic.md", "r").read()
+    language_list = article['languages']
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
-    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language)
+    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list)
 
 testObject = {
     "expect": {
@@ -367,12 +400,21 @@ def __test():
 
 @app.route('/')
 def index():
+    Lesson.commit()
+    # db.session.execute("""DROP TABLE "article" """)
+    # db.session.commit()
+    # db.session.add(Lesson(currentCompletion=0, associatedArticle="arrays", associatedCategory=0))
+    # db.session.commit()
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title)
 
 @app.route('/favicon.ico')
 def favicon():
     return redirect(url_for('static', filename='favicon.ico'))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html', title = webpage_title), 404
 
 if __name__ == '__main__':
     if not os.path.exists('db.sqlite'):

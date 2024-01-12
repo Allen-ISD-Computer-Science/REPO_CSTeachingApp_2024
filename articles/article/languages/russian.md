@@ -64,3 +64,23 @@ var fruits: [String] = ["Watermelon", "Mango", "Apple"]
 Представьте себе список животных.
 
 <br>
+
+* &emsp;&emsp; Первым животным в списке является <u>собака</u>.
+* &emsp;&emsp; Запись о втором животном в списке остается <u>пустой</u>.
+* &emsp;&emsp; Третьим животным в списке является <u>кошка</u>.
+* &emsp;&emsp; Запись о четвертом животном в списке также остается <u>пустой</u>.
+
+<br>
+
+<!-- String = "строка" in Russian. -->
+
+Let's represent each animal as a <code class="language-swift">String</code> and a blank space as <code class="language-swift">nil</code>. 
+
+<br>
+
+<!-- 
+https://upload.wikimedia.org/wikipedia/commons/b/bf/CPT-programming-array.svg
+Change the innerText of "Cat" and "Dog" to "Кот" and "собока" in the DOM of the SVG.
+-->
+
+<img src="/gallery/article/array.png" width="256" height="256">

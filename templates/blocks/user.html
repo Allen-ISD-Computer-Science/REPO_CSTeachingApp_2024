@@ -4,19 +4,23 @@
         <div class="flex items-center flex-row pb-4">
             <img class="rounded-full" src="{{ url_for('static', filename='imgs/people/david.jpeg') }}">
             <div class="flex flex-col">
-                {% if not card %} 
                 <h1 class="ml-4 text-4xl">{{ name }}</h1>
-                {% else %}
-                <div class="flex flex-row">
-                    <h1 class="ml-4 text-4xl">{{ name }}</h1>
-                    <!-- FIXME: Make this button do something -->
-                    <!-- <button class="mt-1 ml-4 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Add Freind</button> -->
-                    <button class="mt-1 ml-4 px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm">Add Freind</button>
-                </div>
-                {% endif %}
                 <div class="flex flex-row">
                     <h1 class="ml-4 text-gray-400">@{{ username }}</h1>
                 </div>
+                {% if card %}
+                <!-- FIXME: Make this button do something -->
+                <!-- <button class="mt-1 ml-4 px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm">Add Freind</button> -->
+                <button class="mt-1 ml-4 px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded shadow-sm w-[55%]">
+                    <div class="flex">
+                        <div id="button_icon">
+                            <!-- https://primer.style/foundations/icons/person-add-16 -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path d="M7.9 8.548h-.001a5.528 5.528 0 0 1 3.1 4.659.75.75 0 1 1-1.498.086A4.01 4.01 0 0 0 5.5 9.5a4.01 4.01 0 0 0-4.001 3.793.75.75 0 1 1-1.498-.085 5.527 5.527 0 0 1 3.1-4.66 3.5 3.5 0 1 1 4.799 0ZM13.25 0a.75.75 0 0 1 .75.75V2h1.25a.75.75 0 0 1 0 1.5H14v1.25a.75.75 0 0 1-1.5 0V3.5h-1.25a.75.75 0 0 1 0-1.5h1.25V.75a.75.75 0 0 1 .75-.75ZM5.5 4a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 4Z"></path></svg>
+                        </div>
+                        <div class="pl-2 text-xs">Friend</div>
+                    </div>
+                </button>
+                {% endif %}
             </div>
         </div>
         {% if card %}
