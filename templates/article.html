@@ -38,7 +38,7 @@
             font-weight: bold;
         }
         h4:not([class]) {
-            font-size: 17px; /* FIXME: This doesn't really make sense, oh well */
+            font-size: 17px; /* FIXME: This does not really make sense. */
             font-weight: bold;
         }
         ul:not([class]) {
@@ -50,12 +50,17 @@
             list-style-position: inside;
             list-style-type: decimal;
         }
+	{% if language == "ar" %}
+	#main_container {
+	    direction: rtl;
+	}
+	{% endif %}
     </style>
 </head>
 <body class="bg-gray-100 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]">
     {% include "blocks/header.html" %}
     <!-- {# <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> #} -->
-    <div class="container mx-auto py-8">
+    <div id="main_container" class="container mx-auto py-8">
         <article class="bg-white rounded-lg shadow-md p-6 prose max-w-full">
             <h1 class="text-3xl font-semibold text-gray-800">{{ title }}</h1>
             <div class="flex flex-row mt-2">
