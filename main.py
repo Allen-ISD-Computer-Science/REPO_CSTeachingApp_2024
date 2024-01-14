@@ -400,11 +400,14 @@ def __test():
 
 @app.route('/')
 def index():
+    # The follow few lines are for debugging only. Please comment these lines out when not in use. 
+    '''
     Lesson.commit()
     # db.session.execute("""DROP TABLE "article" """)
     # db.session.commit()
     # db.session.add(Lesson(currentCompletion=0, associatedArticle="arrays", associatedCategory=0))
     # db.session.commit()
+    '''
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title)
 
