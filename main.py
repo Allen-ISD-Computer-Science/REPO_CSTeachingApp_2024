@@ -189,6 +189,7 @@ def article(article_name, language = "en"):
         case "en": contents = open(f"articles/{article_name}/contents.md", "r").read()
         case "ru": contents = open(f"articles/{article_name}/languages/russian.md", "r").read()
         case "ar": contents = open(f"articles/{article_name}/languages/arabic.md", "r").read()
+	case "zh": contents = open(f"articles/{article_name}/languages/chinese.md", "r").read()
     language_list = article['languages']
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
