@@ -17,13 +17,13 @@
       <header class="flex items-stretch">
         <img src="{{ url_for('static', filename='imgs/extras/logo.svg') }}" width="128" height="128">
         <div class="flex items-center">
-          <a href="/login">Login</a>
+          <a href="./login">Login</a>
         </div>
       </header>
       <div>
         <div class="flex bg-[#9DBBF8] mt-4 pb-4 justify-center items-center">
           <!-- FIXME: Make this animated. -->
-          <img style="filter: drop-shadow(30px 10px 4px gray);" src="/static/imgs/extras/brandbird-iphone-14.png" class="rotate-12" width="384" height="384">
+          <img style="filter: drop-shadow(30px 10px 4px gray);" src="{{ url_for('static', filename='imgs/extras/brandbird-iphone-14.png') }}" class="rotate-12" width="384" height="384">
         </div>
         <div class="px-6 flex bg-[#748EC3] items-center">
           <div class="p-12 flex flex-col">

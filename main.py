@@ -17,9 +17,11 @@
 from flask_login import login_required, current_user, UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from flask import url_for as ufor
 from flask import *
 import subprocess
 import markdown
+import getpass
 import random
 import json
 import yaml
@@ -27,6 +29,10 @@ import time
 import enum
 import sys
 import os
+
+config = {
+    "vapor": True
+}
 
 # MISC = 0
 # ARRAY = 1
@@ -41,8 +47,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
-
 webpage_title = "Veneficus - The best coding platform."
+
+# This is such a nasty hack. I changed flasks native `url_for` to `ufor` and made this the `url_for` function.
+def url_for(endpoint, **values): return f"/vapor/{getpass.getuser()}" + ufor(endpoint, **values) if config["vapor"] == True else ufor(endpoint, **values)
+
+app.jinja_env.globals.update(url_for=url_for)
 
 '''LOGIN CODE'''
 # https://exploreflask.com/en/latest/blueprints.html#how-do-you-use-them
@@ -189,7 +199,7 @@ def article(article_name, language = "en"):
         case "en": contents = open(f"articles/{article_name}/contents.md", "r").read()
         case "ru": contents = open(f"articles/{article_name}/languages/russian.md", "r").read()
         case "ar": contents = open(f"articles/{article_name}/languages/arabic.md", "r").read()
-	case "zh": contents = open(f"articles/{article_name}/languages/chinese.md", "r").read()
+        case "zh": contents = open(f"articles/{article_name}/languages/chinese.md", "r").read()
     language_list = article['languages']
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
@@ -410,7 +420,7 @@ def index():
     # db.session.commit()
     '''
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
-    else: return render_template('index.html', title = webpage_title)
+    else: return render_template('index.html', title = webpage_title), 200
 
 @app.route('/favicon.ico')
 def favicon():
@@ -425,8 +435,8 @@ if __name__ == '__main__':
         with app.app_context():
             db.create_all()
     app.run(
-        # host='0.0.0.0',
-        port=5000,
+        host='0.0.0.0',
+        port=os.environ.get("PORT"),
         debug=True
     )
     # http://192.168.1.39:5000/
