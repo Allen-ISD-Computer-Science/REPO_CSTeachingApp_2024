@@ -40,7 +40,7 @@
 
         // nasty hack
         let x = $.ajax({
-		    url: "/stats/json",
+		    url: "{{ url_for('stats_json') }}",
 		    type: "GET",
 		    async: false,
 	    });

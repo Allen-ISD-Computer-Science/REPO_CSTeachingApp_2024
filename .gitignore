@@ -1,0 +1,7 @@
+venv
+# start.sh
+# run.sh
+VaporShell
+db.sqlite
+attempts.json
+notes.txt
