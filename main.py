@@ -35,7 +35,7 @@ config = {
     "vapor": True,
     "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
-    "vapor_username": 'leon-slavin',
+    "vapor_username": '' # 'leon-slavin',
 }
 
 # MISC = 0
