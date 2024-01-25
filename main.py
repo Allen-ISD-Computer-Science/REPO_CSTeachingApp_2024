@@ -18,6 +18,7 @@ from flask_login import login_required, current_user, UserMixin, LoginManager, l
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask import url_for as ufor
+from bs4 import BeautifulSoup
 from flask import *
 import subprocess
 import markdown
@@ -31,7 +32,10 @@ import sys
 import os
 
 config = {
-    "vapor": True
+    "vapor": True,
+    "host": '0.0.0.0',
+    "port": os.environ.get("PORT"),
+    "vapor_username": 'leon-slavin',
 }
 
 # MISC = 0
@@ -179,6 +183,14 @@ def gallery_query_all(article_name):
     files = [x for x in files if not x.startswith(".")]
     return str(files)
 
+def treat(html_content, username):
+    if config["vapor"] == False: return html_content
+    soup = BeautifulSoup(html_content, 'html.parser')
+    for img_tag in soup.find_all('img', src=True):
+        img_tag['src'] = f"/vapor/{username}{img_tag['src']}"
+    modified_html = str(soup)
+    return modified_html
+
 # Articles (GET)
 @app.route("/article/<article_name>/<language>", methods = ["GET"])
 @app.route("/article/<article_name>", methods = ["GET"])
@@ -203,6 +215,7 @@ def article(article_name, language = "en"):
     language_list = article['languages']
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    output = treat(output, config['vapor_username'])
     return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list)
 
 testObject = {
@@ -435,8 +448,8 @@ if __name__ == '__main__':
         with app.app_context():
             db.create_all()
     app.run(
-        host='0.0.0.0',
-        port=os.environ.get("PORT"),
+        host=config["host"],
+        port=config["port"],
         debug=True
     )
     # http://192.168.1.39:5000/

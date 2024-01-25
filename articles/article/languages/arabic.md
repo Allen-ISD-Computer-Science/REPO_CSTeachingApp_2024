@@ -8,7 +8,7 @@
 
 <br>
 
-<img src="../../gallery/article/fruits.svg" width="512" height="512" alt="fruits">
+<img src="/gallery/article/fruits.svg" width="512" height="512" alt="fruits">
 
 <br>
 
@@ -45,7 +45,9 @@ var thirdFruit: String = "Apple"
 <img src="/gallery/article/inner.png" width="768" height="768"> 
 
 <br>
+
 ### لاحظ 
+
 <br> 
 
 بما أن فهرس المساحة هو عدد صحيح، فإن العنصر الأول يحتوي على فهرس يساوي
