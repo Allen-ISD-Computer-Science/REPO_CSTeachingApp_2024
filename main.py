@@ -35,7 +35,7 @@ config = {
     "vapor": True,
     "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
-    "vapor_username": '' # 'leon-slavin',
+    "vapor_username": 'brent-hicks'
 }
 
 # MISC = 0
@@ -134,6 +134,10 @@ def login_post():
         return redirect(url_for('login'))
     login_user(user, remember=remember)
     return redirect(url_for('index'))
+
+@app.route('/temporary_info_page')
+def temporary_info_page():
+    return "This page works."
 
 @app.route('/signup')
 def signup():
