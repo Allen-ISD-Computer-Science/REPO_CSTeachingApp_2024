@@ -32,7 +32,7 @@ import sys
 import os
 
 config = {
-    "vapor": True,
+    "vapor": False,
     "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
     "vapor_username": 'brent-hicks'
@@ -336,7 +336,7 @@ def question_picker(id):
 def load_attempts():
     my_json = {}
     try:
-        with open('attempts.json') as f: my_json = json.load(f)
+        with open('gitattempts.json') as f: my_json = json.load(f)
     except FileNotFoundError: raise Exception("Could not find file \"attempts.json\"")
     return my_json
 
