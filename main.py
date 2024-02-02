@@ -44,6 +44,13 @@ config = {
 # TYPE = 3
 # OOP = 4
 
+class Topics(enum.Enum):
+    MISC = 0
+    ARRAY = 1
+    LOOP = 2
+    TYPE = 3
+    OOP = 4
+
 ### This will be called Veneficus with Merlin Logo - Slgoan: Become a programming wizz
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO' # os.urandom(12)
@@ -77,36 +84,21 @@ class User(UserMixin, db.Model):
     # time = db.Column(db.Time)
     # friends = db.Column()
 
-class Lesson(db.Model):
+class Lesson:
 
-    '''
+    # class LessonTopics(enum.Enum)
+
     class LessonStages(enum.Enum):
         Stage_0 = 0 # Not started
         Stage_1 = 1 # Lesson
         Stage_2 = 2 # Quiz
         Stage_3 = 3 # Finished
 
+    associatedLessonTopic = None
+    assoicatedArticleLink = None
+
     @staticmethod
     def question_picker(): return random.choice(questions)
-    '''
-
-    @staticmethod
-    def commit():
-        db.session.add(
-            Lesson(
-                articleOne="test",
-                articleTwo="test",
-                articleThree="test"
-            )
-        )
-        db.session.commit()
-
-    # Format: [name, link]
-
-    id = db.Column(db.Integer, primary_key=True)
-    articleOne = db.Column(db.String(256))
-    articleTwo = db.Column(db.String(256))
-    articleThree = db.Column(db.String(256))
 
 db.init_app(app)
 
@@ -426,6 +418,12 @@ def __test():
             questions=current_question[ID]["choices"],
         )
 
+# lesson Guide will be the route that returns the next link to the next component in a lesson (if ready and available)
+@app.route('/guide')
+@login_required
+def guide(): pass 
+    # if a
+
 @app.route('/')
 def index():
     # The follow few lines are for debugging only. Please comment these lines out when not in use. 
@@ -448,6 +446,8 @@ def page_not_found(e):
     return render_template('errors/404.html', title = webpage_title), 404
 
 if __name__ == '__main__':
+    if not os.path.exists('attempts.json'):
+        with open("attempts.json", "w+") as f: f.write('{}')
     if not os.path.exists('db.sqlite'):
         with app.app_context():
             db.create_all()
