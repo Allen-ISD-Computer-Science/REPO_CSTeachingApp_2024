@@ -33,7 +33,7 @@ import os
 
 config = {
     "vapor": False,
-    "host": '0.0.0.0',
+    "host": '127.0.0.1',
     "port": os.environ.get("PORT"),
     "vapor_username": 'brent-hicks'
 }
@@ -336,7 +336,7 @@ def question_picker(id):
 def load_attempts():
     my_json = {}
     try:
-        with open('gitattempts.json') as f: my_json = json.load(f)
+        with open('attempts.json') as f: my_json = json.load(f)
     except FileNotFoundError: raise Exception("Could not find file \"attempts.json\"")
     return my_json
 
@@ -426,6 +426,19 @@ def __test():
             questions=current_question[ID]["choices"],
         )
 
+'''
+lessons = {}
+
+@app.route('/guide')
+@login_required
+def guide():
+    global lessons
+    ID = current_user.get_id()
+    try: current_user[ID]
+    except: return "User currently is not pursuing any lesson."
+    try: current_user[ID] 
+'''
+ 
 @app.route('/')
 def index():
     # The follow few lines are for debugging only. Please comment these lines out when not in use. 

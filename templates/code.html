@@ -30,7 +30,7 @@
                 <script>
                     // https://authzed.com/blog/show-and-tell
                     var code = `{{ code|safe }}`;
-		    // var sendURL = `{{ url_for('recv_code') }}`;
+		            // var sendURL = `{{ url_for('recv_code') }}`;
                     globalThis.x = new IDE('swift', 'vs-light', code, `{{ url_for('recv_code') }}`); // vs-dark -> vs-light
                     function run() { 
                         let elementSelector = document.getElementById("check")
