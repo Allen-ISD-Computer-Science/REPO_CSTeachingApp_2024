@@ -1,6 +1,6 @@
 {% block content %}
     <!-- nasty hack -->
-    <div {% if not card %} onclick=`document.location = '{{ url_for("user", username=username) }}';` {% endif %} class="relative bg-white px-6 {% if card %}pt-10 pb-8{% else %}pt-4{% endif %} shadow-xl ring-1 ring-gray-900/5 {# sm:mx-auto sm:max-w-lg #} sm:rounded-lg sm:px-10">
+    <div {% if not card %} onclick="document.location = `{{ url_for('user', username=username) }}`;" {% endif %} class="relative bg-white px-6 {% if card %}pt-10 pb-8{% else %}pt-4{% endif %} shadow-xl ring-1 ring-gray-900/5 {# sm:mx-auto sm:max-w-lg #} sm:rounded-lg sm:px-10">
         <div class="flex items-center flex-row pb-4">
             <img class="rounded-full" src="{{ url_for('static', filename='imgs/people/david.jpeg') }}">
             <div class="flex flex-col">
