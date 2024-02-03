@@ -328,7 +328,7 @@ def question_picker(id):
 def load_attempts():
     my_json = {}
     try:
-        with open('gitattempts.json') as f: my_json = json.load(f)
+        with open('attempts.json') as f: my_json = json.load(f)
     except FileNotFoundError: raise Exception("Could not find file \"attempts.json\"")
     return my_json
 
@@ -421,8 +421,8 @@ def __test():
 # lesson Guide will be the route that returns the next link to the next component in a lesson (if ready and available)
 @app.route('/guide')
 @login_required
-def guide(): pass 
-    # if a
+def guide():
+    return redirect("test") # We will redirect to Practice Questions for now
 
 @app.route('/')
 def index():
