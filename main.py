@@ -33,7 +33,7 @@ import os
 
 config = {
     "vapor": False,
-    "host": '0.0.0.0',
+    "host": '127.0.0.1',
     "port": os.environ.get("PORT"),
     "vapor_username": 'brent-hicks'
 }
@@ -417,6 +417,7 @@ def __test():
             prompt=current_question[ID]["question"],
             questions=current_question[ID]["choices"],
         )
+
 
 # lesson Guide will be the route that returns the next link to the next component in a lesson (if ready and available)
 @app.route('/guide')
