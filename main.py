@@ -33,16 +33,16 @@ import os
 
 config = {
     "vapor": False,
-    "host": '127.0.0.1',
+    "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
     "vapor_username": 'brent-hicks'
 }
 
-# MISC = 0
-# ARRAY = 1
-# LOOP = 2
-# TYPE = 3
-# OOP = 4
+# TODO: When the user loads an article, Add that they completed part of the lesson.
+# TODO: 
+
+def claim(): ...
+def confirm(): ...
 
 class Topics(enum.Enum):
     MISC = 0
@@ -311,6 +311,7 @@ def get_random_user():
         query = User.query.filter_by().all()
         return random.choice(query)
 
+lessons = {}
 questions = {}
 current_question = {}
 completed_questions = {}
@@ -339,6 +340,7 @@ def commit_to_db(user, question, choice):
     with open('attempts.json', 'w+') as f: json.dump(my_json, f)
     return
 
+# TODO: Assign each Lesson and Unit a Unique ID so we can mark each Lesson as done when a user completes it.
 @app.route('/learn', methods=['GET'])
 @login_required
 def learn():
@@ -418,23 +420,22 @@ def __test():
             questions=current_question[ID]["choices"],
         )
 
-
 # lesson Guide will be the route that returns the next link to the next component in a lesson (if ready and available)
 @app.route('/guide')
 @login_required
 def guide():
-    return redirect("test") # We will redirect to Practice Questions for now
+    global lessons
+    ID = current_user.get_id()
+    try:
+        match lessons[ID]:
+            case Lesson.LessonStages.Stage_0: return redirect("test") # Change to 'article' later. When the user first clicks on a lesson, this is where they will be redirected to.
+            case Lesson.LessonStages.Stage_1: return redirect("test")
+            case Lesson.LessonStages.Stage_2: return redirect("learn")
+            case _: return redirect("test")
+    except: return "Bad Request"
 
 @app.route('/')
 def index():
-    # The follow few lines are for debugging only. Please comment these lines out when not in use. 
-    '''
-    Lesson.commit()
-    # db.session.execute("""DROP TABLE "article" """)
-    # db.session.commit()
-    # db.session.add(Lesson(currentCompletion=0, associatedArticle="arrays", associatedCategory=0))
-    # db.session.commit()
-    '''
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title), 200
 
