@@ -1,6 +1,7 @@
 venv
 # start.sh
 # run.sh
+*.DS_Store
 VaporShell
 db.sqlite
 attempts.json
