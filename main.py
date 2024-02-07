@@ -97,8 +97,31 @@ class Lesson:
     associatedLessonTopic = None
     assoicatedArticleLink = None
 
+    def __init__(self, topic, article):
+        self.associatedLessonTopic = topic
+        self.assoicatedArticleLink = article
+
     @staticmethod
     def question_picker(): return random.choice(questions)
+
+class LessonCatalog:
+
+    def __init__(self):
+        self.lessonCatalog = {
+            "0": Lesson(Topics.ARRAY, "article"),
+            "1": Lesson(Topics.MISC, "types"),
+        }
+
+    # def search(self, topic: Topics): return [lesson for lesson in self.lessonCatalog if lesson.associatedLessonTopic == topic]
+    # def search(self, link: str): return [lesson for lesson in self.lessonCatalog if lesson.assoicatedArticleLink == link]
+    def search(self, id: int): return self.lessonCatalog[id]    
+
+    def make_user_card(self):
+        user_card = {"iscard": True, "lessons": {}}
+        for lesson in self.lessonCatalog.keys(): user_card["lessons"][lesson] = Lesson.LessonStages.Stage_0.value
+        return user_card
+
+MyLessonCatalog = LessonCatalog()
 
 db.init_app(app)
 
@@ -420,20 +443,34 @@ def __test():
             questions=current_question[ID]["choices"],
         )
 
-# lesson Guide will be the route that returns the next link to the next component in a lesson (if ready and available)
+# Description: Guide will be the route that returns the next link to the next component of a lesson (if ready and available).
+# (1) FIXME: Save the lesson state in a JSON File simmlar to `attempts.json`.
+# (2) FIXME: Instead of returning to `__test`, Create a custom quiz view just for Lesson Quizzes.
+# (3) FIXME: Modify the `guide` route to override and redirect to lessons farther ahead in the course.
+# NOTE: I don't think we should let the user go ahead. So we should ignore number 3 for now.
 @app.route('/guide')
 @login_required
 def guide():
     global lessons
     ID = current_user.get_id()
-    try:
-        match lessons[ID]:
-            case Lesson.LessonStages.Stage_0: return redirect("test") # Change to 'article' later. When the user first clicks on a lesson, this is where they will be redirected to.
-            case Lesson.LessonStages.Stage_1: return redirect("test")
-            case Lesson.LessonStages.Stage_2: return redirect("learn")
-            case _: return redirect("test")
-    except: return "Bad Request"
-
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+        else: break
+    match lessons[ID]["lessons"][lessonCurrent]:
+        case Lesson.LessonStages.Stage_0.value: 
+            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_1.value
+            return redirect(url_for("article", article_name=MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink))
+        case Lesson.LessonStages.Stage_1.value: 
+            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
+            return redirect(url_for("__test"))
+        case Lesson.LessonStages.Stage_2.value:
+            # FIXME: Only change to `Stage_3` if the quiz was completed and passed.
+            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
+            return redirect(url_for("index"))
+        case _: return "Unknown Error in guide route.", 404
+        
 @app.route('/')
 def index():
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
