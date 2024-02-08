@@ -82,7 +82,6 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     # picture = db.Column(db.String(500)) # URL
     # time = db.Column(db.Time)
-    # friends = db.Column()
 
 class Lesson:
 
@@ -232,10 +231,11 @@ def article(article_name, language = "en"):
         case "ar": contents = open(f"articles/{article_name}/languages/arabic.md", "r").read()
         case "zh": contents = open(f"articles/{article_name}/languages/chinese.md", "r").read()
     language_list = article['languages']
+    ffcheck = check_for_fast_forward(article_name)
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
     output = treat(output, config['vapor_username'])
-    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list)
+    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list, ffcheck = ffcheck)
 
 testObject = {
     "expect": {
@@ -443,11 +443,23 @@ def __test():
             questions=current_question[ID]["choices"],
         )
 
+# FIXME: Make something simmlar for older articles.
+@login_required
+def check_for_fast_forward(article):
+    global lessons
+    ID = current_user.get_id()
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink == article:
+            if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_0.value: return True
+            else: return False
+        else: continue
+    else: return None # Invalid  
+
 # Description: Guide will be the route that returns the next link to the next component of a lesson (if ready and available).
 # (1) FIXME: Save the lesson state in a JSON File simmlar to `attempts.json`.
 # (2) FIXME: Instead of returning to `__test`, Create a custom quiz view just for Lesson Quizzes.
-# (3) FIXME: Modify the `guide` route to override and redirect to lessons farther ahead in the course.
-# NOTE: I don't think we should let the user go ahead. So we should ignore number 3 for now.
 @app.route('/guide')
 @login_required
 def guide():
@@ -469,7 +481,10 @@ def guide():
             # FIXME: Only change to `Stage_3` if the quiz was completed and passed.
             lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
             return redirect(url_for("index"))
-        case _: return "Unknown Error in guide route.", 404
+        case _: 
+            for value in lessons[ID]["lessons"].values():
+                if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route.", 404
+            return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
         
 @app.route('/')
 def index():
