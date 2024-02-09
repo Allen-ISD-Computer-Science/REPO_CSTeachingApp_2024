@@ -457,6 +457,30 @@ def check_for_fast_forward(article):
         else: continue
     else: return None # Invalid  
 
+# Custom quiz view just for Lesson Quizzes.
+@app.route('/quiz')
+@login_required
+def __quiz():
+    _questions = False
+    _current_questions = False
+    _correct_questions = False
+    _completed_questions = False
+    ID = current_user.get_id()
+    # Check if Practice ('__test') is being activly attempted.
+    try: questions[ID]
+    except: _questions = True
+    try: current_question[ID]
+    except: _current_questions = True
+    try: correct_questions[ID]
+    except KeyError: _correct_questions = True
+    try: completed_questions[ID]
+    except KeyError: _completed_questions = True
+    # Check if all true.
+    if False not in [_questions, _current_questions, _correct_questions, _completed_questions]:
+        return "Good."
+    else: 
+        return render_template("errors/core/attempting.html")
+    
 # Description: Guide will be the route that returns the next link to the next component of a lesson (if ready and available).
 # (1) FIXME: Save the lesson state in a JSON File simmlar to `attempts.json`.
 # (2) FIXME: Instead of returning to `__test`, Create a custom quiz view just for Lesson Quizzes.
@@ -497,7 +521,8 @@ def favicon():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('errors/404.html', title = webpage_title), 404
+    # return render_template('errors/404.html', title = webpage_title), 404
+    return render_template('errors/http/404.html', title = webpage_title), 404
 
 if __name__ == '__main__':
     if not os.path.exists('attempts.json'):
