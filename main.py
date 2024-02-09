@@ -428,7 +428,7 @@ def __test():
     except KeyError: completed_questions[ID] = 0
     if len(questions[ID]) == 0:
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
-        TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%")
+        TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__test")
         questions[ID] = question_loader()
         current_question[ID] = question_picker(ID)
         completed_questions[ID] = 0
@@ -441,6 +441,8 @@ def __test():
             title=webpage_title,
             prompt=current_question[ID]["question"],
             questions=current_question[ID]["choices"],
+            parse_data_func="parse_data",
+            testing_func = "__test"
         )
 
 # FIXME: Make something simmlar for older articles.
@@ -461,6 +463,14 @@ def check_for_fast_forward(article):
 @app.route('/quiz')
 @login_required
 def __quiz():
+    global questions
+    global correct_questions
+    global current_question
+    global completed_questions
+    # TODO: Add a something called a "Quiz Warrent" which is sent when a Quiz is needed.
+    #       '/quiz' may not be opened without a quiz warrent.
+    ID = current_user.get_id()
+    '''
     _questions = False
     _current_questions = False
     _correct_questions = False
@@ -475,11 +485,35 @@ def __quiz():
     except KeyError: _correct_questions = True
     try: completed_questions[ID]
     except KeyError: _completed_questions = True
-    # Check if all true.
-    if False not in [_questions, _current_questions, _correct_questions, _completed_questions]:
-        return "Good."
-    else: 
-        return render_template("errors/core/attempting.html")
+    if False in [_questions, _current_questions, _correct_questions, _completed_questions]: return render_template("errors/core/attempting.html")
+    '''
+    # FIXME: Remove the Try and Catch and just assign the values.
+    try: questions[ID]
+    except: questions[ID] = question_loader()
+    try: correct_questions[ID]
+    except KeyError: current_question[ID] = question_picker(ID)
+    try: correct_questions[ID]
+    except KeyError: correct_questions[ID] = 0
+    try: completed_questions[ID]
+    except KeyError: completed_questions[ID] = 0
+    if len(questions[ID]) == 0:
+        TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
+        TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__quiz")
+        questions[ID] = question_loader()
+        current_question[ID] = question_picker(ID)
+        completed_questions[ID] = 0
+        correct_questions[ID] = 0
+        return TemplateRendered
+    else:
+        # Return Template
+        return render_template(
+            'question.html',
+            title=webpage_title,
+            prompt=current_question[ID]["question"],
+            questions=current_question[ID]["choices"],
+            parse_data_func="parse_data",
+            testing_func = "__quiz"
+        )
     
 # Description: Guide will be the route that returns the next link to the next component of a lesson (if ready and available).
 # (1) FIXME: Save the lesson state in a JSON File simmlar to `attempts.json`.
@@ -500,7 +534,7 @@ def guide():
             return redirect(url_for("article", article_name=MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink))
         case Lesson.LessonStages.Stage_1.value: 
             lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
-            return redirect(url_for("__test"))
+            return redirect(url_for("__quiz"))
         case Lesson.LessonStages.Stage_2.value:
             # FIXME: Only change to `Stage_3` if the quiz was completed and passed.
             lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
