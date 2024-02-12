@@ -31,6 +31,7 @@ import enum
 import sys
 import os
 
+# FIXME: Some Features don't seem to work on CoderMerlin Vapor, Add a fix to make sure they do.
 config = {
     "vapor": False,
     "host": '0.0.0.0',
@@ -336,6 +337,7 @@ def get_random_user():
 
 lessons = {}
 questions = {}
+attempting = {}
 current_question = {}
 completed_questions = {}
 correct_questions = {} 
@@ -417,6 +419,7 @@ def __test():
     global current_question
     global completed_questions
     ID = current_user.get_id()
+    if check_if_currently_attempting(ID, "test") == True: return render_template("errors/core/attempting.html", QuizName="Practice")
     # Create all Values
     try: questions[ID]
     except: questions[ID] = question_loader()
@@ -426,6 +429,9 @@ def __test():
     except KeyError: correct_questions[ID] = 0
     try: completed_questions[ID]
     except KeyError: completed_questions[ID] = 0
+    try: 
+        if attempting[ID] == None: attempting[ID] = "test"
+    except: attempting[ID] = "test"
     if len(questions[ID]) == 0:
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__test")
@@ -433,6 +439,7 @@ def __test():
         current_question[ID] = question_picker(ID)
         completed_questions[ID] = 0
         correct_questions[ID] = 0
+        attempting[ID] = None
         return TemplateRendered
     else:
         # Return Template
@@ -459,6 +466,16 @@ def check_for_fast_forward(article):
         else: continue
     else: return None # Invalid  
 
+def check_if_currently_attempting(ID, access_name):
+    global attempting
+    try: attempting[ID]
+    except: attempting[ID] = None
+    if attempting[ID] == None: return False
+    elif attempting[ID] == access_name: return False
+    else: return True
+    # return ((not attempting[ID] == None) or attempting[ID] != access_name)
+
+# TODO: Add a something called a "Quiz Warrent" which is sent when a Quiz is needed. '/quiz' may not be opened without a quiz warrent.
 # Custom quiz view just for Lesson Quizzes.
 @app.route('/quiz')
 @login_required
@@ -467,26 +484,8 @@ def __quiz():
     global correct_questions
     global current_question
     global completed_questions
-    # TODO: Add a something called a "Quiz Warrent" which is sent when a Quiz is needed.
-    #       '/quiz' may not be opened without a quiz warrent.
     ID = current_user.get_id()
-    '''
-    _questions = False
-    _current_questions = False
-    _correct_questions = False
-    _completed_questions = False
-    ID = current_user.get_id()
-    # Check if Practice ('__test') is being activly attempted.
-    try: questions[ID]
-    except: _questions = True
-    try: current_question[ID]
-    except: _current_questions = True
-    try: correct_questions[ID]
-    except KeyError: _correct_questions = True
-    try: completed_questions[ID]
-    except KeyError: _completed_questions = True
-    if False in [_questions, _current_questions, _correct_questions, _completed_questions]: return render_template("errors/core/attempting.html")
-    '''
+    if check_if_currently_attempting(ID, "quiz") == True: return render_template("errors/core/attempting.html", QuizName="Lesson")
     # FIXME: Remove the Try and Catch and just assign the values.
     try: questions[ID]
     except: questions[ID] = question_loader()
@@ -496,13 +495,22 @@ def __quiz():
     except KeyError: correct_questions[ID] = 0
     try: completed_questions[ID]
     except KeyError: completed_questions[ID] = 0
+    try: 
+        if attempting[ID] == None: attempting[ID] = "quiz"
+    except: attempting[ID] = "quiz"
     if len(questions[ID]) == 0:
+        for lessonCurrent in lessons[ID]["lessons"].keys(): 
+            if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+            else: break
+        lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__quiz")
         questions[ID] = question_loader()
         current_question[ID] = question_picker(ID)
         completed_questions[ID] = 0
         correct_questions[ID] = 0
+        attempting[ID] = None
+        # FIXME: Indicate that the quiz has been completed.
         return TemplateRendered
     else:
         # Return Template
@@ -514,7 +522,7 @@ def __quiz():
             parse_data_func="parse_data",
             testing_func = "__quiz"
         )
-    
+
 # Description: Guide will be the route that returns the next link to the next component of a lesson (if ready and available).
 # (1) FIXME: Save the lesson state in a JSON File simmlar to `attempts.json`.
 # (2) FIXME: Instead of returning to `__test`, Create a custom quiz view just for Lesson Quizzes.
@@ -536,9 +544,8 @@ def guide():
             lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
             return redirect(url_for("__quiz"))
         case Lesson.LessonStages.Stage_2.value:
-            # FIXME: Only change to `Stage_3` if the quiz was completed and passed.
-            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
-            return redirect(url_for("index"))
+            # FIXME: Make everything have their functionalities under their respective Stage values.
+            return redirect(url_for("__quiz"))
         case _: 
             for value in lessons[ID]["lessons"].values():
                 if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route.", 404
