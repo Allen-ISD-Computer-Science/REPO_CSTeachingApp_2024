@@ -6,8 +6,8 @@ Before we get into any particular type, We need to discuss the two different cla
 
 <br>
 
-- **Value types** store the value as it is. 
-- **Reference types** store the memory address of where the value is. 
+- **Value types** store the value as it is. This means that when you assign a value type to a variable, a copy of the value is made 
+- **Reference types** store the memory address of where the value is. This means when you work with a reference type, assigning it to a variable doesn't create a new copy of the value, but instead it points to the original values location in memory.
 
 <br>
 
@@ -21,7 +21,7 @@ Before we get into any particular type, We need to discuss the two different cla
 
 <br>
 
-Integers are just **whole numbers** and are **value types**.
+Integers are **whole numbers**. They are categorized as **value types** in swift you create an integer using the **Int** type.
 
 <br>
 
@@ -33,8 +33,7 @@ In Swift, you can create an integer with the type <code class="language-swift">I
 
 <br>
 
-Swift allows you to compromise negative numbers for more positive numbers.
-
+Swift allows you to represent negative numbers as positive numbers when using unsigned integer types. This means that you can use unsigned integers to store values that would normally be considered negative, treating them as positive values. These are declared using the **UInt** type.
 <br>
 
 These are called Unsigned Integers and declared with the <code class="language-swift">UInt</code> type.
@@ -45,7 +44,7 @@ These are called Unsigned Integers and declared with the <code class="language-s
 
 <br>
 
-The Standard <code class="language-swift">Int</code> type has the same bit-length as your CPU. Which will either be 32 or 64 bits long.
+The Standard <code class="language-swift">Int</code> type has the same bit-length as your CPU. Which will usually be either be 32 or 64 bits long.
 
 <br>
 
@@ -87,11 +86,11 @@ Floating Point numbers in Swift can be represented by two types: <code class="la
 
 <br>
 
-Floating Point numbers have restricted/fixed decimal points which can lead to some unusal equation calculations especially so with the <code class="language-swift">Float</code> type.
+Floating Point numbers have restricted/fixed decimal points which can lead to some unusual equation calculations especially with the <code class="language-swift">Float</code> type.
 
 <br>
 
-Thus, It is **recommended that you use <code class="language-swift">Double</code>** when using floating point numbers. 
+It is **recommended that you use <code class="language-swift">Double</code>** when using floating point numbers. 
 
 <br>
 
@@ -106,4 +105,44 @@ Double // Floating Point numbers (precision of at least 15 decimal digits)
 
 <br>
 
-Although <code class="language-swift">8</code> is an integer, <code class="language-swift">8.0</code> is a Float, despite both <code class="language-swift">8</code> and <code class="language-swift">8.0</code> being mathmatically equivlent. 
+Although <code class="language-swift">8</code> is an integer, when writen as <code class="language-swift">8.0</code> it is a Float, despite both <code class="language-swift">8</code> and <code class="language-swift">8.0</code> both being mathematically equivalent. 
+
+<br>
+
+### Strings
+
+<br>
+
+**Strings in Swift:**
+
+Strings are a very important and fundamental data type in Swift. It is used to represent groups of characters. They can contain **Letters**, **Numbers**, **Symbols**, and **Emojis**
+
+
+Strings can be created by using **Double Quotes**  <code class="language-swift">(" ")</code> or **Triple quotes** <code class="language-swift">(""" """)</code>
+These strings can be assigned to variables by using the keywords **let** and **var**
+
+Example of Strings being assigned to variables:
+```swift
+let greeting = "Hello, World!"
+var name = "John"
+```
+
+<br>
+
+
+### Booleans
+
+<br>
+
+Booleans are data types that represent  <code class="language-swift">true</code> or  <code class="language-swift">false</code> values. These are Value types, meaning that when you assign a Boolean to a variable, a copy of the value is made.
+
+
+In Swift, you create a Boolean using the type **Bool**
+
+Example of Booleans usage: 
+```swift
+let isTrue: Bool = true
+let isFalse: Bool = false
+```
+
+<br>
