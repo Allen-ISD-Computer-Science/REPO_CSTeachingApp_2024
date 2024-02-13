@@ -6,3 +6,4 @@ VaporShell
 db.sqlite
 attempts.json
 notes.txt
+main.swift

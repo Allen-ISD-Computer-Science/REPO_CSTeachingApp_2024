@@ -475,6 +475,21 @@ def check_if_currently_attempting(ID, access_name):
     else: return True
     # return ((not attempting[ID] == None) or attempting[ID] != access_name)
 
+@app.route('/mule')
+def __mule():
+    global lessons
+    ID = current_user.get_id()
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+        else: break
+    match lessons[ID]["lessons"][lessonCurrent]:
+        case Lesson.LessonStages.Stage_0.value: lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_1.value
+        case Lesson.LessonStages.Stage_1.value: lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
+        case _: ...
+    return redirect(url_for("guide"))
+
 # TODO: Add a something called a "Quiz Warrent" which is sent when a Quiz is needed. '/quiz' may not be opened without a quiz warrent.
 # Custom quiz view just for Lesson Quizzes.
 @app.route('/quiz')
@@ -537,18 +552,12 @@ def guide():
         if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
         else: break
     match lessons[ID]["lessons"][lessonCurrent]:
-        case Lesson.LessonStages.Stage_0.value: 
-            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_1.value
-            return redirect(url_for("article", article_name=MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink))
-        case Lesson.LessonStages.Stage_1.value: 
-            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
-            return redirect(url_for("__quiz"))
-        case Lesson.LessonStages.Stage_2.value:
-            # FIXME: Make everything have their functionalities under their respective Stage values.
-            return redirect(url_for("__quiz"))
+        case Lesson.LessonStages.Stage_0.value: return redirect(url_for('__mule'))
+        case Lesson.LessonStages.Stage_1.value: return redirect(url_for("article", article_name=MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink))
+        case Lesson.LessonStages.Stage_2.value: return redirect(url_for("__quiz"))
         case _: 
             for value in lessons[ID]["lessons"].values():
-                if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route.", 404
+                if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route. <i>(Hint no context)</i>", 404
             return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
         
 @app.route('/')
