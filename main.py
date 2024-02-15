@@ -36,14 +36,8 @@ config = {
     "vapor": False,
     "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
-    "vapor_username": 'brent-hicks'
+    "vapor_username": ''
 }
-
-# TODO: When the user loads an article, Add that they completed part of the lesson.
-# TODO: 
-
-def claim(): ...
-def confirm(): ...
 
 class Topics(enum.Enum):
     MISC = 0
@@ -335,6 +329,7 @@ def get_random_user():
         query = User.query.filter_by().all()
         return random.choice(query)
 
+warrent = {}
 lessons = {}
 questions = {}
 attempting = {}
@@ -486,11 +481,12 @@ def __mule():
         else: break
     match lessons[ID]["lessons"][lessonCurrent]:
         case Lesson.LessonStages.Stage_0.value: lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_1.value
-        case Lesson.LessonStages.Stage_1.value: lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
+        case Lesson.LessonStages.Stage_1.value: 
+            warrent[ID] = True
+            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
         case _: ...
     return redirect(url_for("guide"))
 
-# TODO: Add a something called a "Quiz Warrent" which is sent when a Quiz is needed. '/quiz' may not be opened without a quiz warrent.
 # Custom quiz view just for Lesson Quizzes.
 @app.route('/quiz')
 @login_required
@@ -501,6 +497,12 @@ def __quiz():
     global completed_questions
     ID = current_user.get_id()
     if check_if_currently_attempting(ID, "quiz") == True: return render_template("errors/core/attempting.html", QuizName="Lesson")
+    try:
+        if warrent[ID] == True: pass
+        else: return "No Quiz Warrent", 404
+    except: 
+        warrent[ID] = False
+        return "No Quiz Warrent", 404
     # FIXME: Remove the Try and Catch and just assign the values.
     try: questions[ID]
     except: questions[ID] = question_loader()
@@ -517,6 +519,7 @@ def __quiz():
         for lessonCurrent in lessons[ID]["lessons"].keys(): 
             if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
             else: break
+        warrent[ID] = False
         lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__quiz")
