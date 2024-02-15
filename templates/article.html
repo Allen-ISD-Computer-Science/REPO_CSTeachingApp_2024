@@ -73,6 +73,11 @@
     <!-- {# <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> #} -->
     <div id="main_container" class="container mx-auto py-8">
         <article class="bg-white rounded-lg shadow-md p-6 prose max-w-full">
+            {% if ffcheck == True %}
+                <div class="bg-yellow-100">
+                    Be Advised: This article covers a topic in a later unit.
+                </div>
+            {% endif %}
             <h1 class="text-3xl font-semibold text-gray-800">{{ title }}</h1>
             <div class="flex flex-row mt-2">
                 <p class="text-gray-500 pr-2">Published on {{ date }}</p>
@@ -106,9 +111,11 @@
                 {# {% endfilter %} #}
             </div>
             <!-- Next Button -->
-            <form action="{{ url_for('guide') }}">
+            {% if ffcheck == False %}
+            <form action="{{ url_for('__mule') }}">
                 <button class="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm" " type="submit">Next</button>             
             </form>
+            {% endif %}
         </article>
     </div>
 </body>

@@ -4,9 +4,12 @@
         <div class="Ellipse1"></div>
         <img src="{{ url_for('static', filename='imgs/merlin.svg') }}" id="Image1">
         <div>
-            <div onclick="document.location.href = './article/article';" class="Container">🔒 {{ Unit[x][1][0] }}</div>
-            <div onclick="document.location.href = './article/article';" class="Container">🔒 {{ Unit[x][1][1] }}</div>
-            <div onclick="document.location.href = './article/types';" class="Container">🔒 {{ Unit[x][1][2] }}</div>
+            <!-- {# FIXME: Change to use url_for #} -->
+            <div onclick="document.location.href = '/guide';" class="Container">🔒 {{ Unit[x][1][0] }}</div>
+            <!-- {# FIXME: Make it so that the articles are saved to a seperate place after reading. "/shelf"? #} -->
+            <!-- {# <div onclick="document.location.href = './article/article';" class="Container">🔒 {{ Unit[x][1][0] }}</div> #} -->
+            <!-- {# <div onclick="document.location.href = './article/article';" class="Container">🔒 {{ Unit[x][1][1] }}</div> #} -->
+            <!-- {# <div onclick="document.location.href = './article/types';" class="Container">🔒 {{ Unit[x][1][2] }}</div>   #} -->
         </div>
     </div>
 {% endblock content %}

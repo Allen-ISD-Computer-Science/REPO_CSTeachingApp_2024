@@ -31,18 +31,13 @@ import enum
 import sys
 import os
 
+# FIXME: Some Features don't seem to work on CoderMerlin Vapor, Add a fix to make sure they do.
 config = {
     "vapor": False,
-    "host": '127.0.0.1',
+    "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
-    "vapor_username": 'brent-hicks'
+    "vapor_username": ''
 }
-
-# MISC = 0
-# ARRAY = 1
-# LOOP = 2
-# TYPE = 3
-# OOP = 4
 
 class Topics(enum.Enum):
     MISC = 0
@@ -82,7 +77,6 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     # picture = db.Column(db.String(500)) # URL
     # time = db.Column(db.Time)
-    # friends = db.Column()
 
 class Lesson:
 
@@ -97,8 +91,31 @@ class Lesson:
     associatedLessonTopic = None
     assoicatedArticleLink = None
 
+    def __init__(self, topic, article):
+        self.associatedLessonTopic = topic
+        self.assoicatedArticleLink = article
+
     @staticmethod
     def question_picker(): return random.choice(questions)
+
+class LessonCatalog:
+
+    def __init__(self):
+        self.lessonCatalog = {
+            "0": Lesson(Topics.ARRAY, "article"),
+            "1": Lesson(Topics.MISC, "types"),
+        }
+
+    # def search(self, topic: Topics): return [lesson for lesson in self.lessonCatalog if lesson.associatedLessonTopic == topic]
+    # def search(self, link: str): return [lesson for lesson in self.lessonCatalog if lesson.assoicatedArticleLink == link]
+    def search(self, id: int): return self.lessonCatalog[id]    
+
+    def make_user_card(self):
+        user_card = {"iscard": True, "lessons": {}}
+        for lesson in self.lessonCatalog.keys(): user_card["lessons"][lesson] = Lesson.LessonStages.Stage_0.value
+        return user_card
+
+MyLessonCatalog = LessonCatalog()
 
 db.init_app(app)
 
@@ -209,10 +226,11 @@ def article(article_name, language = "en"):
         case "ar": contents = open(f"articles/{article_name}/languages/arabic.md", "r").read()
         case "zh": contents = open(f"articles/{article_name}/languages/chinese.md", "r").read()
     language_list = article['languages']
+    ffcheck = check_for_fast_forward(article_name)
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
     output = treat(output, config['vapor_username'])
-    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list)
+    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list, ffcheck = ffcheck)
 
 testObject = {
     "expect": {
@@ -311,7 +329,10 @@ def get_random_user():
         query = User.query.filter_by().all()
         return random.choice(query)
 
+warrent = {}
+lessons = {}
 questions = {}
+attempting = {}
 current_question = {}
 completed_questions = {}
 correct_questions = {} 
@@ -339,6 +360,7 @@ def commit_to_db(user, question, choice):
     with open('attempts.json', 'w+') as f: json.dump(my_json, f)
     return
 
+# TODO: Assign each Lesson and Unit a Unique ID so we can mark each Lesson as done when a user completes it.
 @app.route('/learn', methods=['GET'])
 @login_required
 def learn():
@@ -392,6 +414,7 @@ def __test():
     global current_question
     global completed_questions
     ID = current_user.get_id()
+    if check_if_currently_attempting(ID, "test") == True: return render_template("errors/core/attempting.html", QuizName="Practice")
     # Create all Values
     try: questions[ID]
     except: questions[ID] = question_loader()
@@ -401,13 +424,17 @@ def __test():
     except KeyError: correct_questions[ID] = 0
     try: completed_questions[ID]
     except KeyError: completed_questions[ID] = 0
+    try: 
+        if attempting[ID] == None: attempting[ID] = "test"
+    except: attempting[ID] = "test"
     if len(questions[ID]) == 0:
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
-        TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%")
+        TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__test")
         questions[ID] = question_loader()
         current_question[ID] = question_picker(ID)
         completed_questions[ID] = 0
         correct_questions[ID] = 0
+        attempting[ID] = None
         return TemplateRendered
     else:
         # Return Template
@@ -416,25 +443,128 @@ def __test():
             title=webpage_title,
             prompt=current_question[ID]["question"],
             questions=current_question[ID]["choices"],
+            parse_data_func="parse_data",
+            testing_func = "__test"
         )
 
+# FIXME: Make something simmlar for older articles.
+@login_required
+def check_for_fast_forward(article):
+    global lessons
+    ID = current_user.get_id()
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink == article:
+            if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_0.value: return True
+            else: return False
+        else: continue
+    else: return None # Invalid  
 
-# lesson Guide will be the route that returns the next link to the next component in a lesson (if ready and available)
+def check_if_currently_attempting(ID, access_name):
+    global attempting
+    try: attempting[ID]
+    except: attempting[ID] = None
+    if attempting[ID] == None: return False
+    elif attempting[ID] == access_name: return False
+    else: return True
+    # return ((not attempting[ID] == None) or attempting[ID] != access_name)
+
+@app.route('/mule')
+def __mule():
+    global lessons
+    ID = current_user.get_id()
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+        else: break
+    match lessons[ID]["lessons"][lessonCurrent]:
+        case Lesson.LessonStages.Stage_0.value: lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_1.value
+        case Lesson.LessonStages.Stage_1.value: 
+            warrent[ID] = True
+            lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_2.value
+        case _: ...
+    return redirect(url_for("guide"))
+
+# Custom quiz view just for Lesson Quizzes.
+@app.route('/quiz')
+@login_required
+def __quiz():
+    global questions
+    global correct_questions
+    global current_question
+    global completed_questions
+    ID = current_user.get_id()
+    if check_if_currently_attempting(ID, "quiz") == True: return render_template("errors/core/attempting.html", QuizName="Lesson")
+    try:
+        if warrent[ID] == True: pass
+        else: return "No Quiz Warrent", 404
+    except: 
+        warrent[ID] = False
+        return "No Quiz Warrent", 404
+    # FIXME: Remove the Try and Catch and just assign the values.
+    try: questions[ID]
+    except: questions[ID] = question_loader()
+    try: correct_questions[ID]
+    except KeyError: current_question[ID] = question_picker(ID)
+    try: correct_questions[ID]
+    except KeyError: correct_questions[ID] = 0
+    try: completed_questions[ID]
+    except KeyError: completed_questions[ID] = 0
+    try: 
+        if attempting[ID] == None: attempting[ID] = "quiz"
+    except: attempting[ID] = "quiz"
+    if len(questions[ID]) == 0:
+        for lessonCurrent in lessons[ID]["lessons"].keys(): 
+            if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+            else: break
+        warrent[ID] = False
+        lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
+        TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
+        TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__quiz")
+        questions[ID] = question_loader()
+        current_question[ID] = question_picker(ID)
+        completed_questions[ID] = 0
+        correct_questions[ID] = 0
+        attempting[ID] = None
+        # FIXME: Indicate that the quiz has been completed.
+        return TemplateRendered
+    else:
+        # Return Template
+        return render_template(
+            'question.html',
+            title=webpage_title,
+            prompt=current_question[ID]["question"],
+            questions=current_question[ID]["choices"],
+            parse_data_func="parse_data",
+            testing_func = "__quiz"
+        )
+
+# Description: Guide will be the route that returns the next link to the next component of a lesson (if ready and available).
+# (1) FIXME: Save the lesson state in a JSON File simmlar to `attempts.json`.
+# (2) FIXME: Instead of returning to `__test`, Create a custom quiz view just for Lesson Quizzes.
 @app.route('/guide')
 @login_required
 def guide():
-    return redirect("test") # We will redirect to Practice Questions for now
-
+    global lessons
+    ID = current_user.get_id()
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+        else: break
+    match lessons[ID]["lessons"][lessonCurrent]:
+        case Lesson.LessonStages.Stage_0.value: return redirect(url_for('__mule'))
+        case Lesson.LessonStages.Stage_1.value: return redirect(url_for("article", article_name=MyLessonCatalog.lessonCatalog[lessonCurrent].assoicatedArticleLink))
+        case Lesson.LessonStages.Stage_2.value: return redirect(url_for("__quiz"))
+        case _: 
+            for value in lessons[ID]["lessons"].values():
+                if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route. <i>(Hint no context)</i>", 404
+            return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
+        
 @app.route('/')
 def index():
-    # The follow few lines are for debugging only. Please comment these lines out when not in use. 
-    '''
-    Lesson.commit()
-    # db.session.execute("""DROP TABLE "article" """)
-    # db.session.commit()
-    # db.session.add(Lesson(currentCompletion=0, associatedArticle="arrays", associatedCategory=0))
-    # db.session.commit()
-    '''
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title), 200
 
@@ -444,7 +574,8 @@ def favicon():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('errors/404.html', title = webpage_title), 404
+    # return render_template('errors/404.html', title = webpage_title), 404
+    return render_template('errors/http/404.html', title = webpage_title), 404
 
 if __name__ == '__main__':
     if not os.path.exists('attempts.json'):
