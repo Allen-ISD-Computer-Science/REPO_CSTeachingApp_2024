@@ -30,7 +30,8 @@
                 <script>
                     // https://authzed.com/blog/show-and-tell
                     var code = `{{ code|safe }}`;
-                    globalThis.x = new IDE('swift', 'vs-light', code); // vs-dark -> vs-light
+		            // var sendURL = `{{ url_for('recv_code') }}`;
+                    globalThis.x = new IDE('swift', 'vs-light', code, `{{ url_for('recv_code') }}`); // vs-dark -> vs-light
                     function run() { 
                         let elementSelector = document.getElementById("check")
                         elementSelector.classList.replace("bg-green-600", "bg-amber-500")

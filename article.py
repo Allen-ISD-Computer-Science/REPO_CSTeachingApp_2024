@@ -7,8 +7,10 @@ import sys
 import yaml
 import time
 
-assert ((len(sys.argv)) > 1) == 1
-assert ((len(sys.argv)) < 3) == 1
+# FIXME: Do not serve if YAML File is not finished. 
+
+assert ((len(sys.argv)) > 1 + 1) == 1
+assert ((len(sys.argv)) < 3 + 1) == 1
 
 if sys.argv[1] == "new":
     name = f"articles/{sys.argv[2]}"
@@ -37,20 +39,3 @@ elif sys.argv[1] == "get":
     # with open(f"articles/{selector}/config.yaml", 'r') as f: article = yaml.dump(yaml.safe_load(f))
 elif sys.argv[1] == "remix":
     print("Failed. Support has not yet been added.")
-
-
-'''
-import json
-
-question = input("Enter the question: ")
-choices = [
-    input("Enter 1st choice: "), 
-    input("Enter 2nd choice: "), 
-    input("Enter 3rd choice: "),
-    input("Enter 4th choice: ")
-]
-correct = int(input("Enter correct choice (1, 2, 3, 4): ")) - 1
-
-
-print(json.dumps({"id": "INSERT_ID", "question": question, "choices": choices, "correct": correct}, indent=4))
-'''

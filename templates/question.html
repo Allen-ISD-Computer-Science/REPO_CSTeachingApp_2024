@@ -26,7 +26,8 @@
     	function x() {
 			if (isAlreadyChecked == true) {
 				$.ajax({
-					url: "/test",
+					// url: "{{ url_for('__test') }}",
+					url: "{{ url_for(testing_func) }}",
 					type: "GET",
 					async: false,
 					success: function(response) {
@@ -42,8 +43,9 @@
       		$.ajax({
           		type: 'POST',
           		contentType: 'application/json',
-          		url: '/verify',
-          		data: `{"option": ${m}}`,
+          		// url: '{{ url_for("parse_data") }}',
+          		url: '{{ url_for(parse_data_func) }}',
+				data: `{"option": ${m}}`,
           		async: false,
           		success: (data) => {window.sessionStorage.setItem('data', data)},
           		processData: false,

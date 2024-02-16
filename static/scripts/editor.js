@@ -1,5 +1,6 @@
 class IDE {
-    constructor(language, theme, value) {
+    constructor(language, theme, value, submission_url) {
+	this.submission_url = submission_url;
         require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
         window.MonacoEnvironment = { getWorkerUrl: () => proxy };
         this.proxy = URL.createObjectURL(new Blob([`
@@ -44,10 +45,11 @@ class IDE {
             return;
         } 
         */
+	console.log(this.submission_url);
         $.ajax({
             type: 'POST',
             contentType: 'text/plain',
-            url: '/verify/code',
+            url: this.submission_url, // '/verify/code',
             data: this.editor.getValue(),
             async: false,
             success: (data) => {window.sessionStorage.setItem('data', data)},

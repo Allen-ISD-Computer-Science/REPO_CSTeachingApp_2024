@@ -6,7 +6,7 @@
 
 <br>
 
-<img src="../../gallery/article/fruits.svg" width="512" height="512" alt="fruits">
+<img src="/gallery/article/fruits.svg" width="512" height="512" alt="fruits">
 
 <br>
 

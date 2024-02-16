@@ -1,0 +1,18 @@
+{
+    "en": {
+        "Practice": "Practice",
+        "Social": "Social",
+        "Course": "Course",
+        "Statistics": "Statistics",
+        "Suggested for you": "Suggested for you",
+        "Advertisment": "Advertisment"
+    },
+    "ar": {
+        "Practice": "تدريب",
+        "Statistics": "إحصائيات ",
+        "Social": "اجتماعي ",
+        "Course":" دورة",
+        "Suggested for you": "اقترح لك ",
+        "Advertisment": "إعلان "
+    }
+}
