@@ -1,18 +1,37 @@
 {
-    "en": {
-        "Practice": "Practice",
-        "Social": "Social",
-        "Course": "Course",
-        "Statistics": "Statistics",
-        "Suggested for you": "Suggested for you",
-        "Advertisment": "Advertisment"
+    "portal": {
+        "en": {
+            "Practice": "Practice",
+            "Social": "Social",
+            "Course": "Course",
+            "Statistics": "Statistics",
+            "Suggested for you": "Suggested for you",
+            "Advertisment": "Advertisment"
+        },
+        "ar": {
+            "Practice": "تدريب",
+            "Statistics": "إحصائيات ",
+            "Social": "اجتماعي ",
+            "Course":" دورة",
+            "Suggested for you": "اقترح لك ",
+            "Advertisment": "إعلان "
+        }
     },
-    "ar": {
-        "Practice": "تدريب",
-        "Statistics": "إحصائيات ",
-        "Social": "اجتماعي ",
-        "Course":" دورة",
-        "Suggested for you": "اقترح لك ",
-        "Advertisment": "إعلان "
+    "login": {
+        "en": {
+            "Login ": " Login",
+            "Your Email": "Your Email",
+            "Your Password": "Your Password",
+            " Remember Me": "Remember Me"
+
+        
+        },
+        "ar": {
+            "Login ": " تسجيل الدخول",
+            "Your Email": "الإيميل",
+            "Your password": "كلمة السر",
+            " Remember Me": "تذكرنى"
+
+        }
     }
 }
