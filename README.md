@@ -82,8 +82,8 @@ Run the container with `docker run --rm -it -v "$(pwd)":/root/env -p 127.0.0.1:5
 You can run the project on CoderMerlin as well.
 
 ### 🚀 Setting up a python virtual env
-CoderMerlin does not allow for packages to be natively downloaded.
-To circumvent this we need to use a virtual env.
+CoderMerlin does not allow for packages to be natively downloaded. \
+To circumvent this we need to use a virtual env. \
 You can create one using the following command `python3 -m venv venv`.
 
 ### 🏃 Running
@@ -91,10 +91,11 @@ After you have setup the virtual env, We are ready to run it (in three easy step
 1. Enter the virtual env using this command `source venv/bin/activate` (or `$(cat start.sh)`).
 2. Install all required python packages using this command `python3 -m pip install -r requirements.txt`.
 3. Run the project using this command `python3 main.py`.
+<!-- FIXME: Mention how you have to change the `config` variable in main.py -->
 
 ### ⚠️ Disclaimer
-Running on CoderMerlin is highly unstable. The reason why is redirects.
-We have tried to fix this issue to no avail.
+Running on CoderMerlin is highly unstable. The reason why is redirects. \
+We have tried to fix this issue to no avail. \
 Because of this we cannot guarantee that this project will run on CoderMerlin.
 
 <!-- FIXME: Is "locally" the right word in this context? -->
@@ -109,5 +110,6 @@ After that, make sure to install the packages.
 
 ### 🏃‍♂ Running
 Once you have installed all the required packages which are needed you can proceed to running. \
-To do this, Simply run this command `python3 main.py`.
+To do this, Simply run this command `python3 main.py`. \
+<br>
 *(make sure you are in the projects home directoy)*
