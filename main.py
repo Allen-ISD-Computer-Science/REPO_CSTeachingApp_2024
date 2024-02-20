@@ -336,6 +336,7 @@ attempting = {}
 current_question = {}
 completed_questions = {}
 correct_questions = {} 
+count_questions = len(question_loader())
 
 def question_picker(id):
     choice = random.choice(questions[id])
@@ -427,7 +428,8 @@ def __test():
     try: 
         if attempting[ID] == None: attempting[ID] = "test"
     except: attempting[ID] = "test"
-    if len(questions[ID]) == 0:
+    # if len(questions[ID]) == 0:
+    if len(questions[ID]) < count_questions - 7:
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__test")
         questions[ID] = question_loader()
@@ -515,7 +517,8 @@ def __quiz():
     try: 
         if attempting[ID] == None: attempting[ID] = "quiz"
     except: attempting[ID] = "quiz"
-    if len(questions[ID]) == 0:
+    # if len(questions[ID]) == 0:
+    if len(questions[ID]) < count_questions - 7:
         for lessonCurrent in lessons[ID]["lessons"].keys(): 
             if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
             else: break
