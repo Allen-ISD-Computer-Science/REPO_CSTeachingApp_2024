@@ -1,7 +1,8 @@
-<header align="center">
-  <img align="left" src="./static/imgs/merlin.svg" width="45%">
-  <img align="left" src="./static/imgs/extras/logo.svg" width="45%">
-</header>
+<p align="center">
+  <img src="./static/imgs/merlin.svg" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="./static/imgs/extras/logo.svg" width="45%">
+</p>
 
 <!-- 
 # About Veneficus
@@ -9,27 +10,27 @@ The word Veneficus means Wizard in Latin. \
 The goal of Veneficus is to teach programming in a "magical" way.
 -->
 
-# Our Vision
+# 🔎 Our Vision
 
 Our vision is to offer a comfortable, informative and inclusive learning experience for CS students.
 
-## Comfortability
+## 🏡 Comfortability
 
 One of the very things this project seeks to establish is that the students are the ones in control of their learning. And that nothing has consequences unless explicitly consented to. 
 
 *Features such as Unlimited Retakes are prime examples of our commitment to comfortability.*
 
-## Informativeness
+## 🧑‍🏫 Informativeness
 
 It's critical that you thoroughly explain a concept but it's arguably more critical that things be explained as understandable and simple as possible. 
 
-## Inclusivity
+## 🤝 Inclusivity
 
 A primary goal of this project is to accommodate as many Computer Science students as possible. Everyone should have an equal right to have the same high quality education as everyone else. 
 
 *Features such as Language Translations for articles are a prime example of our commitment to Inclusivity.*
 
-# Roles
+# 🕴 Roles
 
 - `(Product Manager)` Leon Slavin 
     - [GitHub](http://github.com/KingUndeadCodes/)
@@ -49,12 +50,15 @@ A primary goal of this project is to accommodate as many Computer Science studen
 
 <hr>
 
-# Getting Started
+# 👷 Getting Started
 
-## Install Python 3
-To host your own instance of Veneficus, You first need to install Python (version 3.10 recommended)
+## 🐍 Install Python 3.10
+To host your own instance of Veneficus, Install Python 3.10 or later.
 
-## Install Required Python Packages
+## 📦 Install Required Python Packages
+`python3 -m pip install -r requirements.txt`
+
+<!--
 Install the following packages:
 + `click`
 + `Flask`
@@ -68,8 +72,9 @@ Install the following packages:
 + `Werkzeug`
 + `markdown`
 + `pyyaml`
-
 (*Reminder: You can install packages by doing* `python3 -m pip install [package]`)
-## Running
+-->
+
+## 🏃‍♂ Running
 Once you have installed all the required packages which are needed you can proceed to running Veneficus. \
 To do this, Simply run this command `python3 main.py`.
