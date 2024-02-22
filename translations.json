@@ -33,5 +33,24 @@
             " Remember Me": "تذكرنى"
 
         }
+        
+
+    },
+    "signup": {
+        "en": {
+            "signup": "signup",
+            "login page": "login page"
+        },
+        "ar":{ 
+            "signup": " اشتراك",
+            "login page": " صفحة تسجيل الدخول"
+        }
     }
+
 }
+        
+
+    
+
+    
+
