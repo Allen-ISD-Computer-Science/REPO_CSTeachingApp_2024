@@ -33,7 +33,7 @@ import os
 
 # FIXME: Some Features don't seem to work on CoderMerlin Vapor, Add a fix to make sure they do.
 config = {
-    "vapor": False,
+    "vapor": True,
     "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
     "vapor_username": ''
@@ -144,9 +144,23 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('index'))
 
-@app.route('/temporary_info_page')
-def temporary_info_page():
-    return "This page works."
+@app.route('/pages/tos')
+def __TOS():
+    contents = open("pages/TOS.md", 'r').read()
+    output = markdown.markdown(contents) # , extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    return render_template("document.html", content=output) # output
+
+@app.route('/pages/privacy')
+def __privacy():
+    contents = open("pages/privacy.md", 'r').read()
+    output = markdown.markdown(contents) # , extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    return render_template("document.html", content=output)
+
+@app.route('/pages/about')
+def __about():
+    contents = open("pages/about.md", 'r').read()
+    output = markdown.markdown(contents) # , extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    return render_template("document.html", content=output)
 
 @app.route('/signup')
 def signup():

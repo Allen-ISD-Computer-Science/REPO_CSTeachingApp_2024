@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <title>Histogram of the Last 7 Days</title> -->
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]"> 
+    <!-- 
+        [FIXED] FIXME: This is very small on mobile devices for some reason.
+        FIXME: New problem, now everything looks really small. Great.
+    -->
+    {% include "blocks/header.html" %}
+    <!-- <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> -->
+    <div class="flex flex-row justify-center">
+        <div class="border-2 border-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-4 pb-0 w-4/5 h-4/5 bg-slate-50 drop-shadow-2xl" id="content">
+            <h1 class="text-4xl text-center">Weekly Performance</h1>
+            <br>
+            <canvas id="myCanvas"></canvas>
+            <sup class="p-8 pb-0">
+                <p class="pl-4"><b>NOTE</b>: Results may be a little off.</p><br>
+                <p class="pl-4"><b>TIP</b>: Please refresh the page to refetch data.</p>
+            </sup>
+            <!--
+            <h3 style="text-shadow: rgb(34 211 238) 1px 0 10px;" class="accent-primary pl-4 mb-2 mt-3 text-cyan-400 text-4xl">You have completed 4 questions.</h3>
+            <h3 style="text-shadow: rgb(34 211 238) 1px 0 10px;" class="accent-primary pl-4 mb-2 mt-3 text-cyan-400 text-4xl">You completed the most questions on Monday.</h3>
+            <h3 style="text-shadow: rgb(74 222 128) 1px 0 10px;" class="accent-primary pl-4 mb-2 mt-3 text-green-400 text-4xl">3 questions were answered correctly.</h3>
+            <h3 style="text-shadow: rgb(248 113 113) 1px 0 10px;" class="accent-primary pl-4 mb-2 mt-3 text-red-400 text-4xl">1 question was not.</h3>
+            -->
+        </div>
+    </div>
+    <script>
+        const today = new Date();
+        const sevenDaysAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
+        const labels = [];
+        const data = [];
+
+        // nasty hack
+        let x = $.ajax({
+		    url: "{{ url_for('stats_json') }}",
+		    type: "GET",
+		    async: false,
+	    });
+        let m = JSON.parse(x.responseText);
+
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(sevenDaysAgo.getTime() + i * 24 * 3600 * 1000);
+            labels.push(date.toDateString());
+            data.push(m[6 - i]);
+        }
+
+        let total = data.reduce((a, b) => a + b, 0);
+        if (total == 0) {
+            // Change this to be server side. (How?)
+            // https://v1.tailwindcss.com/components/cards
+            document.getElementById("content").innerHTML = `
+            <div class="flex flex-col items-center">
+                <picture class="w-[20%] h-[20%]">
+                    <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f61e/512.webp" type="image/webp">
+                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f61e/512.gif" alt="😞">
+                </picture>
+                <h1 class='text-4xl font-bold'>No Progress this week.</h1>
+                <h3 class='text-xl'>Try completing some practice questions.</h3>
+            </div>
+            `
+        }
+
+        const ctx = document.getElementById('myCanvas').getContext('2d');
+
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgb(8, 87, 156)');   
+        gradient.addColorStop(1, 'rgb(255, 99, 132)');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    fillcolor: gradient,
+                    label: 'Number of Questions',
+                    data: data,
+                    backgroundColor: gradient,
+                    // borderRadius: 10,
+                    fill: false
+                }]
+            },
+            options: {
+                // backgroundColor: "#2e2e2d"
+            }
+        });
+        // Use `data[data.length]` to update the content of the tag in line 23.
+    </script>
+</body>
+</html>

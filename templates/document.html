@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <title>Histogram of the Last 7 Days</title> -->
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]"> 
+    <!-- 
+        [FIXED] FIXME: This is very small on mobile devices for some reason.
+        FIXME: New problem, now everything looks really small. Great.
+    -->
+    {% include "blocks/header.html" %}
+    <!-- <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> -->
+    <div class="flex flex-row justify-center">
+        <div class="border-2 border-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-4 pb-0 w-4/5 h-4/5 bg-slate-50 drop-shadow-2xl" id="content">
+	  {{ content|safe }}
+	</div>
+    </div>
+</body>
+</html>
