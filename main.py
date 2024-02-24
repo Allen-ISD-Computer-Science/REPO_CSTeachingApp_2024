@@ -293,6 +293,28 @@ def assemble_function_call(m, param_values):
 def expr():
     file = generate_swift_function(m=testObject)
     return render_template("code.html", prompt="This should return the sum of <code>x</code> and <code>y</code>.", code=str(file))
+@app.route('/stats/json/categories', methods=['GET'])
+@login_required
+def stats_json_general():
+    x = load_attempts()
+    object = {}
+    total_questions = len(x[current_user.get_id()])
+    questions = question_loader()
+    # Total amount of correct questions [0], Total amount of incorrect questions [1]
+    for m in x[current_user.get_id()]:
+        if int(m['choice']) == questions[int(m['question']) - 1]['correct'] + 1:
+            key = questions[int(m['question']) - 1]['category']
+            try: object[key][0] = object[key][0] + 1
+            except KeyError: object[key] = [1, 0]
+        else:
+            key = questions[int(m['question']) - 1]['category']
+            try: object[key][1] = object[key][1] + 1
+            except KeyError: object[key] = [0, 1]
+    # Calculate the percentage of correct questions
+    for m in object.keys():
+        try: object[m] = (object[m][0] / (object[m][0] + object[m][1])) # * 100
+        except ZeroDivisionError: object[m] = 1
+    return json.dumps(object)
 
 @app.route("/stats/json", methods=['GET'])
 @login_required
