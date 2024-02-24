@@ -33,7 +33,7 @@ import os
 
 # FIXME: Some Features don't seem to work on CoderMerlin Vapor, Add a fix to make sure they do.
 config = {
-    "vapor": True,
+    "vapor": False,
     "host": '0.0.0.0',
     "port": os.environ.get("PORT"),
     "vapor_username": ''
