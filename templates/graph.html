@@ -118,22 +118,20 @@
             let m = JSON.parse(x.responseText);
             const ctx = document.getElementById('myCanvas2').getContext('2d');
             let data = [];
-            for (let i = 0; i < 7; i++) {
-                data.push(m[6 - i]);
+            let labels = [
+                'Miscellaneous',
+                'Arrays',
+                'Loops',
+                'Types',
+                'Object Oriented Programming',
+            ]
+            for (let i = 0; i < labels.length; i++) {
+                data.push(m[labels.length - i - 1]);
             }
-            // var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-            // gradient.addColorStop(0, 'rgb(8, 87, 156)');
-            // gradient.addColorStop(1, 'rgb(255, 99, 132)');
             const chart = new Chart(ctx, {
                 type: 'polarArea',
                 data: {
-                    labels: [
-                        'Miscellaneous',
-                        'Arrays',
-                        'Loops',
-                        'Types',
-                        'Object Oriented Programming',
-                    ],
+                    labels: labels,
                     datasets: [{
                         // fillcolor: gradient,
                         label: 'Number of Questions',

@@ -1,6 +1,7 @@
 venv
 # start.sh
 # run.sh
+__pycache__
 *.DS_Store
 VaporShell
 db.sqlite
