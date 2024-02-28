@@ -3,23 +3,31 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+/* linear-gradient(111deg, rgba(193,3,129,1) 0%, rgba(28,28,28,1) 100%); */
+
 :root {
-    --cardinal: #e66161;
-    /* red */
-    --pumpkin: #d97007;
-    /* orange */
-    --dandelion: #ffcc00;
-    /* yellow */
-    --kiwi: #069420;
-    /* green */
-    --sea: #4c66e0;
-    /* blue */
-    --plum: #A16AE6;
-    /* purple */
-    --almond: #a52a2a;
-    /* brown */
-    --rabbit: #c3c3c3;
-    /* gray */
+    /* colors */
+    --cardinal: #e66161;    /* red */
+    --pumpkin: #d97007;     /* orange */
+    --dandelion: #ffcc00;   /* yellow */
+    --kiwi: #069420;        /* green */
+    --sea: #4c66e0;         /* blue */
+    --plum: #A16AE6;        /* purple */
+    --almond: #a52a2a;      /* brown */
+    --rabbit: #c3c3c3;      /* gray */
+    --metal: #9b9ba1;       /* darker gray */
+    --dragonfruit: #c10382;   /* dark pink */
+    /* gradiants */
+    --grad_cardinal: linear-gradient(111deg, var(--cardinal) 0%, rgba(28,28,28,1) 100%);
+    --grad_pumpkin: linear-gradient(111deg, var(--pumpkin) 0%, rgba(28,28,28,1) 100%);
+    --grad_dandelion: linear-gradient(111deg, var(--dandelion) 0%, rgba(28,28,28,1) 100%);
+    --grad_kiwi: linear-gradient(111deg, var(--kiwi) 0%, rgba(28,28,28,1) 100%);
+    --grad_sea: linear-gradient(111deg, var(--sea) 0%, rgba(28,28,28,1) 100%);
+    --grad_plum: linear-gradient(111deg, var(--plum) 0%, rgba(28,28,28,1) 100%);
+    --grad_almond: linear-gradient(111deg, var(--plum) 0%, rgba(28,28,28,1) 100%);
+    --grad_rabbit: linear-gradient(111deg, var(--rabbit) 0%, rgba(28,28,28,1) 100%);
+    --grad_metal: linear-gradient(111deg, var(--metal) 0%, rgba(28,28,28,1) 100%);
+    --grad_dragonfruit: linear-gradient(111deg, var(--dragonfruit) 0%, rgba(28,28,28,1) 100%);
 }
 
 body {
@@ -61,6 +69,10 @@ body {
 .Rectangle1:nth-child(1) { background: var(--sea); }
 .Rectangle1:nth-child(2) { background: var(--plum); }
 .Rectangle1:nth-child(3) { background: var(--cardinal); }
+
+.Locked { 
+    background: var(--grad_metal) !important;
+}
 
 .Ellipse1 {
     position: absolute;

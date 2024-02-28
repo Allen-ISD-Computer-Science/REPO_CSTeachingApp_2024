@@ -197,7 +197,6 @@ def set_profile_picture():
 @login_required
 def get_profile_picture(w = 96, h = 96):
     picture = eval("0b" + User.query.get(current_user.get_id()).picture)
-    print(picture)
     new_render = modify_svg_dimensions(extract_bits(picture).render(), w, h)
     return new_render
 
@@ -428,11 +427,21 @@ def commit_to_db(user, question, choice):
     with open('attempts.json', 'w+') as f: json.dump(my_json, f)
     return
 
+@login_required
+def get_lesson_state(unit):
+    global lessons
+    ID = current_user.get_id()
+    if lessons == {}: return Lesson.LessonStages.Stage_0.value
+    try: return lessons[str(ID)]["lessons"][str(unit - 1)]
+    except KeyError: return Lesson.LessonStages.Stage_0.value
+    
+app.jinja_env.globals.update(get_lesson_state=get_lesson_state)
+
 # TODO: Assign each Lesson and Unit a Unique ID so we can mark each Lesson as done when a user completes it.
 @app.route('/learn', methods=['GET'])
 @login_required
 def learn():
-    return render_template("learn.html", title = webpage_title, Unit=[['Unit 1: Arrays', ('Introduction to Arrays', 'Array Methods', 'Array Iteration')], ['Unit 2: Functions', ('Parameters', 'Return Values', 'Function Wrap Up')], ['Unit 3: OOP', ('Introduction to OOP', 'Properties', 'Methods')]])
+    return render_template("learn.html", title = webpage_title, Unit=[['Unit 1: Arrays', 1], ['Unit 2: Functions', 2], ['Unit 3: OOP', 3]])
 
 @app.route('/verify/code', methods=['POST'])
 @login_required

@@ -3,6 +3,27 @@ import python_avatars
 
 # TODO: This 100% needs a makeover.
 
+'''
+    my_avatar = python_avatars.Avatar(
+        style=python_avatars.AvatarStyle.CIRCLE,
+        background_color=python_avatars.BackgroundColor.BLACK,
+        # begin
+        top=python_avatars.HairType.STRAIGHT_2,
+        eyebrows=python_avatars.EyebrowType.DEFAULT_NATURAL,
+        eyes=python_avatars.EyeType.WINK,
+        nose=python_avatars.NoseType.SMALL,
+        mouth=python_avatars.MouthType.BIG_SMILE,
+        facial_hair=python_avatars.FacialHairType.NONE,
+        # You can use hex colors on any color attribute...
+        skin_color="#00FFFF",
+        # Or you can use the colors provided by the library
+        hair_color=python_avatars.HairColor.BROWN,
+        accessory=python_avatars.AccessoryType.SUNGLASSES,
+        clothing=python_avatars.ClothingType.SHIRT_V_NECK,
+        clothing_color=python_avatars.ClothingColor.HEATHER
+    )
+'''
+
 def HairTypeConverter(given):
     match given:
         case 0:  return python_avatars.HairType.NONE

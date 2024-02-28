@@ -1,15 +1,21 @@
 {% block content %}
+    {% if get_lesson_state(Unit[x][1]) == 0 %}
+    <div class="Rectangle1 Locked">
+    {% else %}
     <div class="Rectangle1">
+    {% endif %}
         <h1 id="header">{{ Unit[x][0] }}</h1>
         <div class="Ellipse1"></div>
         <img src="{{ url_for('static', filename='imgs/merlin.svg') }}" id="Image1">
         <div>
             <!-- {# FIXME: Change to use url_for #} -->
-            <div onclick="document.location.href = '/guide';" class="Container">🔒 {{ Unit[x][1][0] }}</div>
-            <!-- {# FIXME: Make it so that the articles are saved to a seperate place after reading. "/shelf"? #} -->
-            <!-- {# <div onclick="document.location.href = './article/article';" class="Container">🔒 {{ Unit[x][1][0] }}</div> #} -->
-            <!-- {# <div onclick="document.location.href = './article/article';" class="Container">🔒 {{ Unit[x][1][1] }}</div> #} -->
-            <!-- {# <div onclick="document.location.href = './article/types';" class="Container">🔒 {{ Unit[x][1][2] }}</div>   #} -->
+            {% if get_lesson_state(Unit[x][1]) == 0 %}
+            <div onclick="document.location.href = '/guide';" class="Container">🔒 Nothing</div>
+            {% elif get_lesson_state(Unit[x][1]) == 1 %}
+            <div onclick="document.location.href = '/guide';" class="Container">🔒 Article</div>
+            {% elif get_lesson_state(Unit[x][1]) == 2 %}
+            <div onclick="document.location.href = '/guide';" class="Container">🔒 Quiz</div>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
