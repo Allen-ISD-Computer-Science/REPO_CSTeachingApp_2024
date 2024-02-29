@@ -16,10 +16,13 @@
 
 from flask_login import login_required, current_user, UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+from xml.etree import ElementTree as ET
 from flask_sqlalchemy import SQLAlchemy
 from flask import url_for as ufor
 from bs4 import BeautifulSoup
+from avatars import *
 from flask import *
+import python_avatars
 import subprocess
 import markdown
 import getpass
@@ -69,13 +72,14 @@ app.jinja_env.globals.update(url_for=url_for)
 
 db = SQLAlchemy()
 
+# Since SQLAlchemy does not support unsigned 64-bit integers, we are forced to use strings for picture. 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     name = db.Column(db.String(1000))
     email = db.Column(db.String(100), unique=True)
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
-    # picture = db.Column(db.String(500)) # URL
+    picture = db.Column(db.String(64)) # db.Column(db.BigInteger)
     # time = db.Column(db.Time)
 
 class Lesson:
@@ -144,10 +148,6 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('index'))
 
-@app.route('/temporary_info_page')
-def temporary_info_page():
-    return "This page works."
-
 @app.route('/signup')
 def signup():
     return render_template('signup.html', title = webpage_title)
@@ -166,7 +166,7 @@ def signup_post():
     if user_2:
         flash('Username already exists')
         return redirect(url_for('signup'))
-    new_user = User(email=email, name=name, username=username, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, name=name, username=username, picture = bin(0x68e9c001fffe8d2c)[2:], password=generate_password_hash(password, method='sha256'))
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for('login'))
@@ -178,6 +178,47 @@ def logout():
     return redirect(url_for('index'))
 
 ''' END LOGIN CODE '''
+
+def modify_svg_dimensions(svg_string, new_width, new_height):
+    root = ET.fromstring(svg_string)
+    for elem in root.iter():
+        if 'width' in elem.attrib: elem.attrib['width'] = str(new_width)
+        if 'height' in elem.attrib: elem.attrib['height'] = str(new_height)
+    modified_svg_string = ET.tostring(root, encoding='unicode')    
+    return modified_svg_string
+
+@login_required
+def set_profile_picture():
+    user = User.query.get(current_user.get_id())
+    rand = python_avatars.Avatar.random()
+    user.picture = bin(avatar_to_int(rand))[2:]
+    db.session.commit()
+
+@login_required
+def get_profile_picture(w = 96, h = 96):
+    picture = eval("0b" + User.query.get(current_user.get_id()).picture)
+    new_render = modify_svg_dimensions(extract_bits(picture).render(), w, h)
+    return new_render
+
+app.jinja_env.globals.update(get_profile_picture=get_profile_picture)
+
+@app.route('/pages/tos')
+def __TOS():
+    contents = open("pages/TOS.md", 'r').read()
+    output = markdown.markdown(contents) # , extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    return render_template("document.html", content=output) # output
+
+@app.route('/pages/privacy')
+def __privacy():
+    contents = open("pages/privacy.md", 'r').read()
+    output = markdown.markdown(contents) # , extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    return render_template("document.html", content=output)
+
+@app.route('/pages/about')
+def __about():
+    contents = open("pages/about.md", 'r').read()
+    output = markdown.markdown(contents) # , extensions=['fenced_code', 'sane_lists', 'nl2br'])
+    return render_template("document.html", content=output)
 
 def check_for_article(article_name):
     try: os.listdir(f"articles/{article_name}")
@@ -280,6 +321,29 @@ def expr():
     file = generate_swift_function(m=testObject)
     return render_template("code.html", prompt="This should return the sum of <code>x</code> and <code>y</code>.", code=str(file))
 
+@app.route('/stats/json/categories', methods=['GET'])
+@login_required
+def stats_json_general():
+    x = load_attempts()
+    object = {}
+    total_questions = len(x[current_user.get_id()])
+    questions = question_loader()
+    # Total amount of correct questions [0], Total amount of incorrect questions [1]
+    for m in x[current_user.get_id()]:
+        if int(m['choice']) == questions[int(m['question']) - 1]['correct'] + 1:
+            key = questions[int(m['question']) - 1]['category']
+            try: object[key][0] = object[key][0] + 1
+            except KeyError: object[key] = [1, 0]
+        else:
+            key = questions[int(m['question']) - 1]['category']
+            try: object[key][1] = object[key][1] + 1
+            except KeyError: object[key] = [0, 1]
+    # Calculate the percentage of correct questions
+    for m in object.keys():
+        try: object[m] = (object[m][0] / (object[m][0] + object[m][1])) * 100
+        except ZeroDivisionError: object[m] = 1
+    return json.dumps(object)
+
 @app.route("/stats/json", methods=['GET'])
 @login_required
 def stats_json():
@@ -295,9 +359,11 @@ def stats_json():
     for value in range(7):
         try: object[str(value)]
         except: object[str(value)] = 0
+    '''
     for value in range(7):
         object[str(value)] /= total_questions
         object[str(value)] *= 100
+    '''
     return json.dumps(object)
 
 @app.route("/stats")
@@ -336,6 +402,7 @@ attempting = {}
 current_question = {}
 completed_questions = {}
 correct_questions = {} 
+count_questions = len(question_loader())
 
 def question_picker(id):
     choice = random.choice(questions[id])
@@ -360,11 +427,21 @@ def commit_to_db(user, question, choice):
     with open('attempts.json', 'w+') as f: json.dump(my_json, f)
     return
 
+@login_required
+def get_lesson_state(unit):
+    global lessons
+    ID = current_user.get_id()
+    if lessons == {}: return Lesson.LessonStages.Stage_0.value
+    try: return lessons[str(ID)]["lessons"][str(unit - 1)]
+    except KeyError: return Lesson.LessonStages.Stage_0.value
+    
+app.jinja_env.globals.update(get_lesson_state=get_lesson_state)
+
 # TODO: Assign each Lesson and Unit a Unique ID so we can mark each Lesson as done when a user completes it.
 @app.route('/learn', methods=['GET'])
 @login_required
 def learn():
-    return render_template("learn.html", title = webpage_title, Unit=[['Unit 1: Arrays', ('Introduction to Arrays', 'Array Methods', 'Array Iteration')], ['Unit 2: Functions', ('Parameters', 'Return Values', 'Function Wrap Up')], ['Unit 3: OOP', ('Introduction to OOP', 'Properties', 'Methods')]])
+    return render_template("learn.html", title = webpage_title, Unit=[['Unit 1: Arrays', 1], ['Unit 2: Functions', 2], ['Unit 3: OOP', 3]])
 
 @app.route('/verify/code', methods=['POST'])
 @login_required
@@ -427,7 +504,8 @@ def __test():
     try: 
         if attempting[ID] == None: attempting[ID] = "test"
     except: attempting[ID] = "test"
-    if len(questions[ID]) == 0:
+    # if len(questions[ID]) == 0:
+    if len(questions[ID]) < count_questions - 7:
         TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__test")
         questions[ID] = question_loader()
@@ -515,7 +593,8 @@ def __quiz():
     try: 
         if attempting[ID] == None: attempting[ID] = "quiz"
     except: attempting[ID] = "quiz"
-    if len(questions[ID]) == 0:
+    # if len(questions[ID]) == 0:
+    if len(questions[ID]) < count_questions - 7:
         for lessonCurrent in lessons[ID]["lessons"].keys(): 
             if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
             else: break
