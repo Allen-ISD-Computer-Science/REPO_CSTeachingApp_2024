@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <title>Histogram of the Last 7 Days</title> -->
+	<title>{{ title }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+        :not([class]) {
+            font-family: "Inter", sans-serif;
+        }
+        h1:not([class]) {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        h2:not([class]) {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        h3:not([class]) {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        h4:not([class]) {
+            font-size: 17px; /* FIXME: This does not really make sense. */
+            font-weight: bold;
+        }
+        ul:not([class]) {
+            list-style-position: inside;
+            list-style-type: disc;
+        }
+        
+        ol:not([class]) {
+            list-style-position: inside;
+            list-style-type: decimal;
+        }
+    </style>
+</head>
+<body class="bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})]"> 
+	{% include "blocks/header.html" %}
+	<!-- <div class="absolute inset-0 bg-[url({{ url_for('static', filename='imgs/extras/grid.svg') }})] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> -->
+	<div class="flex flex-row justify-center">
+		<div class="border-2 border-gradient-to-r from-cyan-500 to-blue-500 rounded-lg p-4 pb-0 w-4/5 h-4/5 bg-slate-50 drop-shadow-2xl" id="content">
+			{{ content|safe }}			
+		</div>
+	</div>
+</body>
+</html>

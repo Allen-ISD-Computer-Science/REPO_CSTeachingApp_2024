@@ -30,6 +30,8 @@ A primary goal of this project is to accommodate as many Computer Science studen
 
 *Features such as Language Translations for articles are a prime example of our commitment to Inclusivity.*
 
+<hr>
+
 # 🕴 Roles
 
 - `(Product Manager)` Leon Slavin 
@@ -52,29 +54,62 @@ A primary goal of this project is to accommodate as many Computer Science studen
 
 # 👷 Getting Started
 
-## 🐍 Install Python 3.10
+## 🐳 Using Docker
+You can use docker if you would like.
+
+### 🏗️ Building the docker container
+You can build the docker container with these three easy steps.
+1. Make sure both the project and docker are installed.
+2. Open a Terminal and change your directory to the projects home directory.
+3. Build the container using this command `docker build docker -t venfi` (note: this could take a while).
+
+**You only have to do this once.**
+
+### 🏃 Running using the docker container
+After you have built the container, we are ready to run it (again in three easy steps).
+
+Run the container with `docker run --rm -it -v "$(pwd)":/root/env -p 127.0.0.1:5000:5000 venfi`.
+1. Change your directory to `~/env` *(this should put you in the projects home directoy)*. 
+2. Install all required python packages using this command `python3.11 -m pip install -r requirements.txt`.
+3. Run the project using this command `python3.11 main.py`.
+
+*(note: that running with docker may be unstable as we are still testing it)*
+
+## 🧙 Running on CoderMerlin
+
+⚠️ **Disclaimer**: Running on CoderMerlin is highly unstable. Read more about it below.
+
+You can run the project on CoderMerlin as well.
+
+### 🚀 Setting up a python virtual env
+CoderMerlin does not allow for packages to be natively downloaded. \
+To circumvent this we need to use a virtual env. \
+You can create one using the following command `python3 -m venv venv`.
+
+### 🏃 Running
+After you have setup the virtual env, We are ready to run it (in three easy steps).
+1. Enter the virtual env using this command `source venv/bin/activate` (or `$(cat start.sh)`).
+2. Install all required python packages using this command `python3 -m pip install -r requirements.txt`.
+3. Run the project using this command `python3 main.py`.
+<!-- FIXME: Mention how you have to change the `config` variable in main.py -->
+
+### ⚠️ Disclaimer
+Running on CoderMerlin is highly unstable. The reason why is redirects. \
+We have tried to fix this issue to no avail. \
+Because of this we cannot guarantee that this project will run on CoderMerlin.
+
+<!-- FIXME: Is "locally" the right word in this context? -->
+## 💻 Running Locally
+
+### 🐍 Install Python 3.10 and 📦 Required Python Packages
 To host your own instance of Veneficus, Install Python 3.10 or later.
 
-## 📦 Install Required Python Packages
+After that, make sure to install the packages.
+
 `python3 -m pip install -r requirements.txt`
 
-<!--
-Install the following packages:
-+ `click`
-+ `Flask`
-+ `Flask-HTTPAuth`
-+ `Flask-SQLAlchemy`
-+ `itsdangerous`
-+ `Jinja2`
-+ `MarkupSafe`
-+ `PyJWT`
-+ `SQLAlchemy`
-+ `Werkzeug`
-+ `markdown`
-+ `pyyaml`
-(*Reminder: You can install packages by doing* `python3 -m pip install [package]`)
--->
-
-## 🏃‍♂ Running
-Once you have installed all the required packages which are needed you can proceed to running Veneficus. \
-To do this, Simply run this command `python3 main.py`.
+### 🏃‍♂ Running
+Once you have installed all the required packages which are needed you can proceed to running. \
+To do this, Simply run this command `python3 main.py`. \
+<br>
+*(make sure you are in the projects home directoy)*
