@@ -38,8 +38,13 @@
 				return; 
 			}
 			isAlreadyChecked = true;
-      		var m = $("input[name=option]:checked");
-      		m = m[0].id
+			try {
+				var m = $("input[name=option]:checked");
+      			m = m[0].id
+			} catch (TypeError) {
+				isAlreadyChecked = false;
+				return
+			}
       		$.ajax({
           		type: 'POST',
           		contentType: 'application/json',
