@@ -506,7 +506,7 @@ def __test():
     except: attempting[ID] = "test"
     # if len(questions[ID]) == 0:
     if len(questions[ID]) < count_questions - 7:
-        TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
+        TotalPercent = round(correct_questions[ID]/completed_questions[ID] * 100)
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__test")
         questions[ID] = question_loader()
         current_question[ID] = question_picker(ID)
