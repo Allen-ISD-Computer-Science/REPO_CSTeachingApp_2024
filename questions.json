@@ -14,78 +14,6 @@
         },
         {
             "id": "000000002",
-            "category": 2,
-            "question": "Which loop is guaranteed to run at least one time?",
-            "choices": [
-                "<code style='color: green;'>repeat</code>",
-                "<code style='color: green;'>for</code>",
-                "<code style='color: green;'>while</code>",
-                "None of the Above"
-            ],
-            "correct": 0
-        }, 
-        {
-            "id": "000000003",
-            "category": 2,
-            "question": "Which loop can be used for iterating over arrays?",
-            "choices": [
-                "<code style='color: green;'>for</code>",
-                "<code style='color: green;'>while</code>",
-                "<code style='color: green;'>repeat</code>",
-                "All of the Above"
-            ],
-            "correct": 3
-        },
-        {
-            "id": "000000004",
-            "category": 3,
-            "question": "Which data type should you use with decimal numbers in Swift?",
-            "choices": [
-                "<code style='color: green;'>Float</code>",
-                "<code style='color: green;'>Double</code>",
-                "<code style='color: green;'>Int</code>",
-                "All of the Above"
-            ],
-            "correct": 1
-        },
-        {
-            "id": "000000005",
-            "category": 4,
-            "question": "Which access control modifier is the most restrictive?",
-            "choices": [
-                "<code style='color: green;'>public</code>",
-                "<code style='color: green;'>private</code>",
-                "<code style='color: green;'>internal</code>",
-                "<code style='color: green;'>fileprivate</code>"
-            ],
-            "correct": 1
-        },
-        {
-            "id": "000000006",
-            "category": 0,
-            "question": "Given the parameter int is an Integer and given str is a String, which function will prints the two values concatenated together?",
-            "choices": [
-                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"\\(int)\"&#160;+&#160;str)&#160;}</code>",
-                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int&#160;+&#160;str)&#160;}</code>",
-                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"(int)(str)\")&#160;}</code>",
-                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int.append(str))&#160;}</code>"
-            ],
-            "correct": 0
-        },
-        {
-            "id": "000000007",
-            "category": 0,
-            "question": "Which of the following is not a boolean?",
-            "choices": [
-                "<code style='color: green;'>true</code>",
-                "<code style='color: green;'>false</code>",
-                "<code style='color: green;'>nil</code>",
-                "All are booleans"
-            ],
-            "correct": 2
-        },
-        {
-            "id": "000000008",
             "category": 1,
             "question": "What is the type of the following variable? <code>var&#160;fruits&#160;=&#160;[\"Watermelon\",&#160;\"Mango\",&#160;\"Apple\"]</code>",
             "choices": [
@@ -97,7 +25,7 @@
             "correct": 0
         },
         {
-            "id": "000000009",
+            "id": "000000003",
             "category": 1,
             "question": "What is index <code>1</code> of the following array? <code>var&#160;fruits&#160;=&#160;[\"Watermelon\",&#160;\"Mango\",&#160;\"Apple\",&#160;\"Orange\"]</code>",
             "choices": [
@@ -109,7 +37,7 @@
             "correct": 2
         },
         {
-            "id": "000000010",
+            "id": "000000004",
             "category": 1,
             "question": "Which of the following types is this array? <code>[nil,&#160;nil,&#160;,&#160;nil,&#160;45,&#160;nil,&#160;13,&#160;46,&#160;nil]</code>",
             "choices": [
@@ -121,7 +49,7 @@
             "correct": 0
         },
         {
-            "id": "000000011",
+            "id": "000000005",
             "category": 1,
             "question": "Which of the following statements are true? Assume <code>var&#160;array&#160;=&#160;[4,&#160;8,&#160;7,&#160;6,&#160;5,&#160;4,&#160;3,&#160;2,&#160;0,&#160;8,&#160;9]</code>",
             "choices": [
@@ -133,7 +61,7 @@
             "correct": 3
         },
         {
-            "id": "000000012",
+            "id": "000000006",
             "category": 1,
             "question": "Which of the following arrays have only one element?",
             "choices": [
@@ -141,6 +69,90 @@
                 "<code style='color: green;'>[1,2]</code>",
                 "<code style='color: green;'>[[\"Hello\",&#160;\"Thanks\",&#160;\"Goodbye\"][0]]</code>",
                 "<code style='color: green;'>[[1][0],&#160;1]</code>"
+            ],
+            "correct": 2
+        },
+        {
+            "id": "000000007",
+            "category": 1,
+            "question": "Which of the following arrays have two numbers as the first two elements and their sum as the third?",
+            "choices": [
+                "<code style='color: green;'>[5,3,7]</code>",
+                "<code style='color: green;'>[9,-5,4]</code>",
+                "<code style='color: green;'>[4,5,1]</code>",
+                "<code style='color: green;'>[1,2,1]</code>"
+            ],
+            "correct": 1
+        },
+        {
+            "id": "000000008",
+            "category": 2,
+            "question": "Which loop is guaranteed to run at least one time?",
+            "choices": [
+                "<code style='color: green;'>repeat</code>",
+                "<code style='color: green;'>for</code>",
+                "<code style='color: green;'>while</code>",
+                "None of the Above"
+            ],
+            "correct": 0
+        }, 
+        {
+            "id": "000000009",
+            "category": 2,
+            "question": "Which loop can be used for iterating over arrays?",
+            "choices": [
+                "<code style='color: green;'>for</code>",
+                "<code style='color: green;'>while</code>",
+                "<code style='color: green;'>repeat</code>",
+                "All of the Above"
+            ],
+            "correct": 3
+        },
+        {
+            "id": "000000010",
+            "category": 3,
+            "question": "Which data type should you use with decimal numbers in Swift?",
+            "choices": [
+                "<code style='color: green;'>Float</code>",
+                "<code style='color: green;'>Double</code>",
+                "<code style='color: green;'>Int</code>",
+                "All of the Above"
+            ],
+            "correct": 1
+        },
+        {
+            "id": "000000011",
+            "category": 4,
+            "question": "Which access control modifier is the most restrictive?",
+            "choices": [
+                "<code style='color: green;'>public</code>",
+                "<code style='color: green;'>private</code>",
+                "<code style='color: green;'>internal</code>",
+                "<code style='color: green;'>fileprivate</code>"
+            ],
+            "correct": 1
+        },
+        {
+            "id": "000000012",
+            "category": 0,
+            "question": "Given the parameter int is an Integer and given str is a String, which function will prints the two values concatenated together?",
+            "choices": [
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"\\(int)\"&#160;+&#160;str)&#160;}</code>",
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int&#160;+&#160;str)&#160;}</code>",
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"(int)(str)\")&#160;}</code>",
+                "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int.append(str))&#160;}</code>"
+            ],
+            "correct": 0
+        },
+        {
+            "id": "000000013",
+            "category": 0,
+            "question": "Which of the following is not a boolean?",
+            "choices": [
+                "<code style='color: green;'>true</code>",
+                "<code style='color: green;'>false</code>",
+                "<code style='color: green;'>nil</code>",
+                "All are booleans"
             ],
             "correct": 2
         }
