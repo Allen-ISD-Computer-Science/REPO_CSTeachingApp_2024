@@ -513,7 +513,7 @@ def __test():
         completed_questions[ID] = 0
         correct_questions[ID] = 0
         attempting[ID] = None
-        return TemplateRendered
+        return TemplateRendered, 202
     else:
         # Return Template
         return render_template(
@@ -608,7 +608,7 @@ def __quiz():
         correct_questions[ID] = 0
         attempting[ID] = None
         # FIXME: Indicate that the quiz has been completed.
-        return TemplateRendered
+        return TemplateRendered, 202
     else:
         # Return Template
         return render_template(

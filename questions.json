@@ -4,6 +4,7 @@
             "id": "000000001",
             "category": 1,
             "question": "Assume a variable <code>x</code> with a value of <code>[0,0,0,0]</code> exsists. Identify which choice causes an error.",
+            "difficulty": 0.2,
             "choices": [
                 "<code>x[1]&#160;=&#160;1</code>",
                 "<code>x[2]&#160;=&#160;2</code>",
@@ -16,6 +17,7 @@
             "id": "000000002",
             "category": 1,
             "question": "What is the type of the following variable? <code>var&#160;fruits&#160;=&#160;[\"Watermelon\",&#160;\"Mango\",&#160;\"Apple\"]</code>",
+            "difficulty": 0.1,
             "choices": [
                 "<code style='color: green;'>[String]</code>",
                 "<code style='color: green;'>[Int]</code>",
@@ -28,6 +30,7 @@
             "id": "000000003",
             "category": 1,
             "question": "What is index <code>1</code> of the following array? <code>var&#160;fruits&#160;=&#160;[\"Watermelon\",&#160;\"Mango\",&#160;\"Apple\",&#160;\"Orange\"]</code>",
+            "difficulty": 0.2,
             "choices": [
                 "<code style='color: green;'>\"Apple\"</code>",
                 "<code style='color: green;'>\"Watermelon\"</code>",
@@ -40,6 +43,7 @@
             "id": "000000004",
             "category": 1,
             "question": "Which of the following types is this array? <code>[nil,&#160;nil,&#160;,&#160;nil,&#160;45,&#160;nil,&#160;13,&#160;46,&#160;nil]</code>",
+            "difficulty": 0.2,
             "choices": [
                 "<code style='color: green;'>[Int?]</code>",
                 "<code style='color: green;'>[[Int]?]</code>",
@@ -52,6 +56,7 @@
             "id": "000000005",
             "category": 1,
             "question": "Which of the following statements are true? Assume <code>var&#160;array&#160;=&#160;[4,&#160;8,&#160;7,&#160;6,&#160;5,&#160;4,&#160;3,&#160;2,&#160;0,&#160;8,&#160;9]</code>",
+            "difficulty": 0.2,
             "choices": [
                 "<code style='color: green;'>array[0]&#160;==&#160;7</code>",
                 "<code style='color: green;'>array[3]&#160;==&#160;0</code>",
@@ -64,6 +69,7 @@
             "id": "000000006",
             "category": 1,
             "question": "Which of the following arrays have only one element?",
+            "difficulty": 0.3,
             "choices": [
                 "<code style='color: green;'>[]</code>",
                 "<code style='color: green;'>[1,2]</code>",
@@ -76,6 +82,7 @@
             "id": "000000007",
             "category": 1,
             "question": "Which of the following arrays have two numbers as the first two elements and their sum as the third?",
+            "difficulty": 0.2,
             "choices": [
                 "<code style='color: green;'>[5,3,7]</code>",
                 "<code style='color: green;'>[9,-5,4]</code>",
@@ -86,8 +93,35 @@
         },
         {
             "id": "000000008",
+            "category": 1,
+            "question": "Which of the following is not correct about arrays?",
+            "difficulty": 0.1,
+            "choices": [
+                "Arrays are an abstraction over memory",
+                "Arrays with no values at all are empty.",
+                "Arrays can not contain other arrays.",
+                "The first index of an array is 0."
+            ],
+            "correct": 2
+        },
+        {
+            "id": "000000009",
+            "category": 1,
+            "question": "Which of the following are valid arrays?",
+            "difficulty": 0.4,
+            "choices": [
+                "<code style='color: green;'>[[\"Hello\",&#160;\"Thanks\",&#160;\"Goodbye\"][3]]</code>",
+                "<code style='color: green;'>[[0, 1, 2, 3, 4, 5][6]]</code>",
+                "<code style='color: green;'>[[[0]][0][0]]</code>",
+                "None of the Above"
+            ],
+            "correct": 2
+        },
+        {
+            "id": "000000010",
             "category": 2,
             "question": "Which loop is guaranteed to run at least one time?",
+            "difficulty": null,
             "choices": [
                 "<code style='color: green;'>repeat</code>",
                 "<code style='color: green;'>for</code>",
@@ -97,9 +131,10 @@
             "correct": 0
         }, 
         {
-            "id": "000000009",
+            "id": "000000011",
             "category": 2,
             "question": "Which loop can be used for iterating over arrays?",
+            "difficulty": null,
             "choices": [
                 "<code style='color: green;'>for</code>",
                 "<code style='color: green;'>while</code>",
@@ -109,9 +144,10 @@
             "correct": 3
         },
         {
-            "id": "000000010",
+            "id": "000000012",
             "category": 3,
             "question": "Which data type should you use with decimal numbers in Swift?",
+            "difficulty": null,
             "choices": [
                 "<code style='color: green;'>Float</code>",
                 "<code style='color: green;'>Double</code>",
@@ -121,9 +157,10 @@
             "correct": 1
         },
         {
-            "id": "000000011",
+            "id": "000000013",
             "category": 4,
             "question": "Which access control modifier is the most restrictive?",
+            "difficulty": null,
             "choices": [
                 "<code style='color: green;'>public</code>",
                 "<code style='color: green;'>private</code>",
@@ -133,9 +170,10 @@
             "correct": 1
         },
         {
-            "id": "000000012",
+            "id": "000000014",
             "category": 0,
             "question": "Given the parameter int is an Integer and given str is a String, which function will prints the two values concatenated together?",
+            "difficulty": null,
             "choices": [
                 "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(\"\\(int)\"&#160;+&#160;str)&#160;}</code>",
                 "<code style='color: green;'>func&#160;concatenate(int:&#160;Int,&#160;str:&#160;String)&#160;{&#160;print(int&#160;+&#160;str)&#160;}</code>",
@@ -145,9 +183,10 @@
             "correct": 0
         },
         {
-            "id": "000000013",
+            "id": "000000015",
             "category": 0,
             "question": "Which of the following is not a boolean?",
+            "difficulty": null,
             "choices": [
                 "<code style='color: green;'>true</code>",
                 "<code style='color: green;'>false</code>",
