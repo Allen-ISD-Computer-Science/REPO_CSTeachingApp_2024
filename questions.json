@@ -119,6 +119,99 @@
         },
         {
             "id": "000000010",
+            "category": 1,
+            "question": "Image an array <code>x</code> that holds 64 elements, What is the index for the last element of the array?",
+            "difficulty": 0.2,
+            "choices": [
+                "<code style='color: green;'>63</code>",
+                "<code style='color: green;'>64</code>",
+                "<code style='color: green;'>65</code>",
+                "<code style='color: green;'>66</code>"
+            ],
+            "correct": 0
+        },
+        {
+            "id": "000000011",
+            "category": 1,
+            "question": "Assume an arrays base address is <code>0x8000</code> and each element is 2 bytes. What is the address of the 4th element?",
+            "difficulty": 0.5,
+            "choices": [
+                "<code style='color: green;'>0x8000</code>",
+                "<code style='color: green;'>0x8010</code>",
+                "<code style='color: green;'>0x8008</code>",
+                "<code style='color: green;'>0x8002</code>"
+            ],
+            "correct": 2
+        },
+        {
+            "id": "000000012",
+            "category": 1,
+            "question": "Which of thw following arrays have 5 elements?",
+            "difficulty": 0.2,
+            "choices": [
+                "<code style='color: green;'>[5]</code>",
+                "<code style='color: green;'>[1,2,3,4]</code>",
+                "<code style='color: green;'>[6,7,8,9,10]</code>",
+                "<code style='color: green;'>[5,4,3,2]</code>"
+            ],
+            "correct": 2
+        },
+        {
+            "id": "000000013",
+            "category": 1,
+            "question": "Which of the following statements are true?",
+            "difficulty": 0.3,
+            "choices": [
+                "<code style='color: green;'>[0,1,2,3][4]&#160;==&#160;4</code>",
+                "<code style='color: green;'>[0]&#160;==&#160;[1]</code>",
+                "<code style='color: green;'>[0][1]&#160;==&#160;0</code>",
+                "<code style='color: green;'>[1][0]&#160;==&#160;1</code>"
+            ],
+            "correct": 3
+        },
+        {
+            "id": "000000014",
+            "category": 1,
+            "question": "Which of the following arrays have 3 elements?",
+            "difficulty": 0.1,
+            "choices": [
+                "<code style='color: green;'>[2]</code>",
+                "<code style='color: green;'>[0,1,2,3]</code>",
+                "<code style='color: green;'>[2,1,1,0]</code>",
+                "<code style='color: green;'>[0,1,1,1]</code>"
+            ],
+            "correct": 0
+        },
+        {
+            "id": "000000015",
+            "category": 1,
+            "question": "Which of the following arrays have no elements?",
+            "difficulty": 0.2,
+            "choices": [
+                "<code style='color: green;'>[]</code>",
+                "<code style='color: green;'>[0]</code>",
+                "<code style='color: green;'>[1,2,3]</code>",
+                "<code style='color: green;'>[nil]</code>"
+            ],
+            "correct": 0
+        },
+        {
+            "id": "000000016",
+            "category": 1,
+            "question": "Which of the following arrays have 7 elements?",
+            "difficulty": 0.1,
+            "choices": [
+                "<code style='color: green;'>[7]</code>",
+                "<code style='color: green;'>[0,1,2,3,4,5,6]</code>",
+                "<code style='color: green;'>[7,6,5,4,3,2]</code>",
+                "<code style='color: green;'>[0]</code>"
+            ],
+            "correct": 1
+        }
+    ],
+    "archive": [
+        {
+            "id": "000000015",
             "category": 2,
             "question": "Which loop is guaranteed to run at least one time?",
             "difficulty": null,
@@ -131,7 +224,7 @@
             "correct": 0
         }, 
         {
-            "id": "000000011",
+            "id": "000000016",
             "category": 2,
             "question": "Which loop can be used for iterating over arrays?",
             "difficulty": null,
@@ -144,7 +237,7 @@
             "correct": 3
         },
         {
-            "id": "000000012",
+            "id": "000000017",
             "category": 3,
             "question": "Which data type should you use with decimal numbers in Swift?",
             "difficulty": null,
@@ -157,7 +250,7 @@
             "correct": 1
         },
         {
-            "id": "000000013",
+            "id": "000000018",
             "category": 4,
             "question": "Which access control modifier is the most restrictive?",
             "difficulty": null,
@@ -170,7 +263,7 @@
             "correct": 1
         },
         {
-            "id": "000000014",
+            "id": "000000019",
             "category": 0,
             "question": "Given the parameter int is an Integer and given str is a String, which function will prints the two values concatenated together?",
             "difficulty": null,
@@ -183,7 +276,7 @@
             "correct": 0
         },
         {
-            "id": "000000015",
+            "id": "000000020",
             "category": 0,
             "question": "Which of the following is not a boolean?",
             "difficulty": null,

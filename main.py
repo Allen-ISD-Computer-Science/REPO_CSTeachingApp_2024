@@ -600,7 +600,8 @@ def __quiz():
             else: break
         warrent[ID] = False
         lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
-        TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
+        # TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
+        TotalPercent = round(correct_questions[ID]/completed_questions[ID] * 100)
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__quiz")
         questions[ID] = question_loader()
         current_question[ID] = question_picker(ID)
