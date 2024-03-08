@@ -92,22 +92,65 @@ class Lesson:
         Stage_2 = 2 # Quiz
         Stage_3 = 3 # Finished
 
+    associatedQuestionPallet = None
     associatedLessonTopic = None
     assoicatedArticleLink = None
 
-    def __init__(self, topic, article):
+    def __init__(self, topic, article, pallet):
         self.associatedLessonTopic = topic
         self.assoicatedArticleLink = article
+        self.associatedQuestionPallet = pallet
+        self.algorithmKeyEntry = {}
+        # self.reccomendationAlgorithm = Lesson.FindElementWithCondition(self)
 
-    @staticmethod
-    def question_picker(): return random.choice(questions)
+    def new_algorithm(self, id):
+        self.algorithmKeyEntry[id] = Lesson.FindElementWithCondition(self)
+        return
+
+    def get_algorithm(self, id):
+        if id not in self.algorithmKeyEntry: self.new_algorithm(id)
+        return self.algorithmKeyEntry[id]
+
+    class FindElementWithCondition:
+
+        def __init__(self, Lesson):
+            lst = Lesson.associatedQuestionPallet
+            self.lst = lst
+            self.copy_lst = lst
+            self.length = self.get_number_of_questions(len(lst))
+            self.multi = 0
+            self.questions = 0
+            self.choices = []
+
+        def rand_bool(self): return random.choice([True, False])
+
+        def get_number_of_questions(self, number_of_questions = 33):
+            x = 0
+            while (((5 * x) - 3) + 1) < number_of_questions: x += 1
+            return x
+
+        def find_element_with_condition(self):
+            if len(self.choices) >= self.length: return None
+            index_middle = (len(self.copy_lst) // 2) + self.multi
+            index_left = (index_middle - 1) + self.multi
+            index_right = (index_middle + 1) + self.multi
+            # Select Question
+            choice = random.choice([index_left, index_middle, index_right])
+            value = self.lst[choice]
+            self.copy_lst.pop(choice)
+            self.choices.append(value)
+            # Multi update
+            if self.rand_bool() == True: self.multi += 1
+            else: self.multi -= 1
+            self.questions += 1
+            return self.choices[-1]
 
 class LessonCatalog:
 
     def __init__(self):
         self.lessonCatalog = {
-            "0": Lesson(Topics.ARRAY, "article"),
-            "1": Lesson(Topics.MISC, "types"),
+            "0": Lesson(Topics.ARRAY, "article", ['000000001', '000000002', '000000003', '000000004', '000000005', '000000006', '000000007', '000000008', '000000009', '000000010', '000000011', '000000012', '000000013', '000000014', '000000015', '000000016', '000000017', '000000018']),
+            "1": Lesson(Topics.MISC, "types", ['000000001', '000000002', '000000003', '000000004', '000000005', '000000006', '000000007', '000000008', '000000009', '000000010', '000000011', '000000012', '000000013', '000000014', '000000015', '000000016', '000000017', '000000018']),
         }
 
     # def search(self, topic: Topics): return [lesson for lesson in self.lessonCatalog if lesson.associatedLessonTopic == topic]
@@ -404,14 +447,25 @@ completed_questions = {}
 correct_questions = {} 
 count_questions = len(question_loader())
 
-def question_picker(id):
-    choice = random.choice(questions[id])
-    for question in range(len(questions[id])):
-        if questions[id][question]["id"] == choice["id"]:
-            questions[id].pop(question)
-            break
-        else: continue
-    return choice
+def question_picker(id, _attempting = "test"):
+    if _attempting == "quiz" or attempting[id] == "quiz":
+        for lessonCurrent in lessons[id]["lessons"].keys(): 
+            if lessons[id]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+            else: break
+        UserReccomendationAlgorithmInstance = MyLessonCatalog.lessonCatalog[lessonCurrent].get_algorithm(id=id)
+        try: choice = int(UserReccomendationAlgorithmInstance.find_element_with_condition()) - 1
+        except: return None
+        value = questions[id][choice]
+        questions[id].pop(choice)
+        return value
+    else:
+        choice = random.choice(questions[id])
+        for question in range(len(questions[id])):
+            if questions[id][question]["id"] == choice["id"]:
+                questions[id].pop(question)
+                break
+            else: continue
+        return choice
 
 def load_attempts():
     my_json = {}
@@ -463,7 +517,7 @@ def recv_code():
 
 @app.route('/verify', methods=['POST'])
 @login_required
-def parse_data():    
+def parse_data():
     global correct_questions
     global current_question
     global completed_questions
@@ -495,7 +549,7 @@ def __test():
     # Create all Values
     try: questions[ID]
     except: questions[ID] = question_loader()
-    try: correct_questions[ID]
+    try: current_question[ID]
     except KeyError: current_question[ID] = question_picker(ID)
     try: correct_questions[ID]
     except KeyError: correct_questions[ID] = 0
@@ -548,6 +602,17 @@ def check_if_currently_attempting(ID, access_name):
     else: return True
     # return ((not attempting[ID] == None) or attempting[ID] != access_name)
 
+@login_required
+def get_current_lesson():
+    global lessons
+    ID = current_user.get_id()
+    try: lessons[ID]["iscard"]
+    except: lessons[ID] = MyLessonCatalog.make_user_card()
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+        else: break
+    return lessonCurrent
+
 @app.route('/mule')
 def __mule():
     global lessons
@@ -581,11 +646,19 @@ def __quiz():
     except: 
         warrent[ID] = False
         return "No Quiz Warrent", 404
-    # FIXME: Remove the Try and Catch and just assign the values.
+    for lessonCurrent in lessons[ID]["lessons"].keys(): 
+        if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
+        else: break
+    try: 
+        # This is different from the `__test` route.
+        # This is because quiz requires a different algorithm and needs to insure that the prior loaded question has to be from that algorithm.
+        if attempting[ID] == None: 
+            questions[ID] = question_loader()
+            current_question[ID] = question_picker(ID, "quiz")
+        else: current_question[ID]
+    except KeyError: current_question[ID] = question_picker(ID, "quiz")
     try: questions[ID]
     except: questions[ID] = question_loader()
-    try: correct_questions[ID]
-    except KeyError: current_question[ID] = question_picker(ID)
     try: correct_questions[ID]
     except KeyError: correct_questions[ID] = 0
     try: completed_questions[ID]
@@ -593,18 +666,14 @@ def __quiz():
     try: 
         if attempting[ID] == None: attempting[ID] = "quiz"
     except: attempting[ID] = "quiz"
-    # if len(questions[ID]) == 0:
-    if len(questions[ID]) < count_questions - 7:
-        for lessonCurrent in lessons[ID]["lessons"].keys(): 
-            if lessons[ID]["lessons"][lessonCurrent] == Lesson.LessonStages.Stage_3.value: continue
-            else: break
+    if current_question[ID] == None:
         warrent[ID] = False
         lessons[ID]["lessons"][lessonCurrent] = Lesson.LessonStages.Stage_3.value
-        # TotalPercent = (correct_questions[ID]/completed_questions[ID]) * 100
         TotalPercent = round(correct_questions[ID]/completed_questions[ID] * 100)
         TemplateRendered = render_template("question.html", title=webpage_title, flash=f"You got {str(TotalPercent)}%", parse_data_func="parse_data", testing_func = "__quiz")
         questions[ID] = question_loader()
-        current_question[ID] = question_picker(ID)
+        # current_question[ID] = question_picker(ID)
+        del current_question[ID]
         completed_questions[ID] = 0
         correct_questions[ID] = 0
         attempting[ID] = None
