@@ -104,7 +104,7 @@ class Lesson:
         # self.reccomendationAlgorithm = Lesson.FindElementWithCondition(self)
 
     def new_algorithm(self, id):
-        self.algorithmKeyEntry[id] = Lesson.FindElementWithCondition(self)
+        self.algorithmKeyEntry[id] = Lesson.FindElementWithCondition(self, id)
         return
 
     def get_algorithm(self, id):
@@ -113,16 +113,24 @@ class Lesson:
 
     class FindElementWithCondition:
 
-        def __init__(self, Lesson):
+        def __init__(self, Lesson, _id):
             lst = Lesson.associatedQuestionPallet
+            self.uid = _id
             self.lst = lst
             self.copy_lst = lst
             self.length = self.get_number_of_questions(len(lst))
             self.multi = 0
             self.questions = 0
             self.choices = []
+            self.completed = 0
 
-        def rand_bool(self): return random.choice([True, False])
+        def rand_bool(self): 
+            try: completed_questions[self.uid]
+            except KeyError: completed_questions[self.uid] = 0
+            x = correct_questions[self.uid] > self.completed
+            self.completed += 1
+            return x
+            # return random.choice([True, False])
 
         def get_number_of_questions(self, number_of_questions = 33):
             x = 0
@@ -140,17 +148,23 @@ class Lesson:
             self.copy_lst.pop(choice)
             self.choices.append(value)
             # Multi update
-            if self.rand_bool() == True: self.multi += 1
-            else: self.multi -= 1
+            cond_X = (len(self.choices) >= self.length - 1)
+            cond_Y = (len(self.choices) > 1)
+            if cond_X or cond_Y: 
+                # print(f"Okay, I am choosing a question. {self.questions}")
+                if self.rand_bool() == True: self.multi += 1
+                else: self.multi -= 1
             self.questions += 1
+            # print(question_loader()[int(self.choices[-1])]['difficulty'])
             return self.choices[-1]
 
 class LessonCatalog:
 
     def __init__(self):
+        array = ['000000002', '000000008', '000000014', '000000016', '000000017', '000000018', '000000001', '000000003', '000000004', '000000005', '000000007', '000000010', '000000012', '000000015', '000000006', '000000013', '000000009', '000000011']
         self.lessonCatalog = {
-            "0": Lesson(Topics.ARRAY, "article", ['000000001', '000000002', '000000003', '000000004', '000000005', '000000006', '000000007', '000000008', '000000009', '000000010', '000000011', '000000012', '000000013', '000000014', '000000015', '000000016', '000000017', '000000018']),
-            "1": Lesson(Topics.MISC, "types", ['000000001', '000000002', '000000003', '000000004', '000000005', '000000006', '000000007', '000000008', '000000009', '000000010', '000000011', '000000012', '000000013', '000000014', '000000015', '000000016', '000000017', '000000018']),
+            "0": Lesson(Topics.ARRAY, "article", array),
+            "1": Lesson(Topics.MISC, "types", array)
         }
 
     # def search(self, topic: Topics): return [lesson for lesson in self.lessonCatalog if lesson.associatedLessonTopic == topic]
@@ -455,8 +469,8 @@ def question_picker(id, _attempting = "test"):
         UserReccomendationAlgorithmInstance = MyLessonCatalog.lessonCatalog[lessonCurrent].get_algorithm(id=id)
         try: choice = int(UserReccomendationAlgorithmInstance.find_element_with_condition()) - 1
         except: return None
-        value = questions[id][choice]
-        questions[id].pop(choice)
+        value = questions[id][choice] 
+        # questions[id].pop(choice) # I think this is the line that is causing the problem.
         return value
     else:
         choice = random.choice(questions[id])
@@ -652,7 +666,9 @@ def __quiz():
     try: 
         # This is different from the `__test` route.
         # This is because quiz requires a different algorithm and needs to insure that the prior loaded question has to be from that algorithm.
-        if attempting[ID] == None: 
+        # FIXME: This is why it isn't working.
+        # TODO: Run a test to make sure that this line `if attempting[ID] == None:` causes the problem.
+        if len(MyLessonCatalog.lessonCatalog[lessonCurrent].get_algorithm(id=ID).choices) == 0:
             questions[ID] = question_loader()
             current_question[ID] = question_picker(ID, "quiz")
         else: current_question[ID]
