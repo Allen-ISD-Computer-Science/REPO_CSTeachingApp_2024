@@ -469,7 +469,8 @@ def question_picker(id, _attempting = "test"):
         UserReccomendationAlgorithmInstance = MyLessonCatalog.lessonCatalog[lessonCurrent].get_algorithm(id=id)
         try: choice = int(UserReccomendationAlgorithmInstance.find_element_with_condition()) - 1
         except: return None
-        value = questions[id][choice] 
+        try: value = questions[id][choice] 
+        except IndexError: print("Index out of range. Probably not enough questions in questions.json.")
         # questions[id].pop(choice) # I think this is the line that is causing the problem.
         return value
     else:
