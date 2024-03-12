@@ -30,6 +30,15 @@
 					url: "{{ url_for(testing_func) }}",
 					type: "GET",
 					async: false,
+					statusCode: {
+						// `202 Accepted` is used to indicate the end of the quiz/test.
+						202: () => {
+							let myAudioElement_1 = new Audio("./static/audio/bing.mp3");
+							let myAudioElement_2 = new Audio("./static/audio/clap.mp3");
+							myAudioElement_1.addEventListener("canplay", (event) => { setTimeout(() => { myAudioElement_1.play(); }, 1000); });
+							myAudioElement_2.addEventListener("canplay", (event) => { setTimeout(() => { myAudioElement_2.play(); }, 250); });
+						}
+					},
 					success: function(response) {
 						document.getElementById("question").innerHTML = getInnerHTMLByID(response, "question");
 					},
@@ -38,8 +47,13 @@
 				return; 
 			}
 			isAlreadyChecked = true;
-      		var m = $("input[name=option]:checked");
-      		m = m[0].id
+			try {
+				var m = $("input[name=option]:checked");
+      			m = m[0].id
+			} catch (TypeError) {
+				isAlreadyChecked = false;
+				return
+			}
       		$.ajax({
           		type: 'POST',
           		contentType: 'application/json',

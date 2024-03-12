@@ -1,5 +1,6 @@
 # docker build docker -t venfi
 # docker run --rm -it -v "$(pwd)":/root/env -p 127.0.0.1:5000:5000 venfi
+# windows: docker run --rm -it -v ${PWD}:/root/env -p 127.0.0.1:5000:5000 venfi
 
 FROM ubuntu:20.04
 

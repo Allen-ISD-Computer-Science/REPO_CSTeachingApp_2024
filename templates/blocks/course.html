@@ -1,6 +1,8 @@
 {% block content %}
     {% if get_lesson_state(Unit[x][1]) == 0 %}
     <div class="Rectangle1 Locked">
+    {% elif get_lesson_state(Unit[x][1]) == 3 %}
+    <div class="Rectangle1 Complete">
     {% else %}
     <div class="Rectangle1">
     {% endif %}

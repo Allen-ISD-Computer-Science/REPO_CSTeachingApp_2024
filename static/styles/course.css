@@ -74,6 +74,10 @@ body {
     background: var(--grad_metal) !important;
 }
 
+.Complete:nth-child(1) { background: var(--grad_sea) !important; }
+.Complete:nth-child(2) { background: var(--grad_plum) !important; }
+.Complete:nth-child(3) { background: var(--grad_cardinal) !important; }
+
 .Ellipse1 {
     position: absolute;
     width: 128px;
