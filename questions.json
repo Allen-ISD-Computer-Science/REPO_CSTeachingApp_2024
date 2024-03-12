@@ -176,11 +176,11 @@
             "difficulty": 0.1,
             "choices": [
                 "<code style='color: green;'>[2]</code>",
-                "<code style='color: green;'>[0,1,2,3]</code>",
+                "<code style='color: green;'>[1,2,3]</code>",
                 "<code style='color: green;'>[2,1,1,0]</code>",
                 "<code style='color: green;'>[0,1,1,1]</code>"
             ],
-            "correct": 0
+            "correct": 1
         },
         {
             "id": "000000015",
@@ -207,6 +207,32 @@
                 "<code style='color: green;'>[0]</code>"
             ],
             "correct": 1
+        },
+        {
+            "id": "000000017",
+            "category": 1,
+            "question": "How many elements are in the following array? <code>[nil,&#160;1,&#160;2,&#160;3]</code>",
+            "difficulty": 0.1,
+            "choices": [
+                "<code style='color: green;'>4</code>",
+                "<code style='color: green;'>3</code>",
+                "<code style='color: green;'>0</code>",
+                "<code style='color: green;'>1</code>"
+            ],
+            "correct": 0
+        },
+        {
+            "id": "000000018",
+            "category": 1,
+            "question": "Which of the following arrays have 5 elements?",
+            "difficulty": 0.1,
+            "choices": [
+                "<code style='color: green;'>[1,2,nil,3,4]</code>",
+                "<code style='color: green;'>[0,1,2,3,4,5,6]</code>",
+                "<code style='color: green;'>[7,6,5,4,3,2]</code>",
+                "<code style='color: green;'>[0]</code>"
+            ],
+            "correct": 0
         }
     ],
     "archive": [
