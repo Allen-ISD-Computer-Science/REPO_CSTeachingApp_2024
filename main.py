@@ -731,7 +731,7 @@ def guide():
         
 @app.route('/')
 def index():
-    if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
+    if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user()) # Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title), 200
 
 @app.route('/favicon.ico')
