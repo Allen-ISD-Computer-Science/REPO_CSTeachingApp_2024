@@ -195,7 +195,7 @@ def login():
 
 @app.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    email = str(request.form.get('email')).lower()
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
     user = User.query.filter_by(email=email).first()
@@ -211,7 +211,7 @@ def signup():
 
 @app.route('/signup', methods=['POST'])
 def signup_post():
-    email = request.form.get('email')
+    email = str(request.form.get('email')).lower()
     name = request.form.get('name')
     username = request.form.get('username')
     password = request.form.get('password')
