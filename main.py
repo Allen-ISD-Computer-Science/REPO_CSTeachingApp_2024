@@ -727,7 +727,8 @@ def guide():
         case _: 
             for value in lessons[ID]["lessons"].values():
                 if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route. <i>(Hint no context)</i>", 404
-            return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
+            return render_template("congrats.html", title = webpage_title)
+            # return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
         
 @app.route('/')
 def index():
