@@ -195,7 +195,7 @@ def login():
 
 @app.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    email = str(request.form.get('email')).lower()
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
     user = User.query.filter_by(email=email).first()
@@ -211,7 +211,7 @@ def signup():
 
 @app.route('/signup', methods=['POST'])
 def signup_post():
-    email = request.form.get('email')
+    email = str(request.form.get('email')).lower()
     name = request.form.get('name')
     username = request.form.get('username')
     password = request.form.get('password')
@@ -469,7 +469,8 @@ def question_picker(id, _attempting = "test"):
         UserReccomendationAlgorithmInstance = MyLessonCatalog.lessonCatalog[lessonCurrent].get_algorithm(id=id)
         try: choice = int(UserReccomendationAlgorithmInstance.find_element_with_condition()) - 1
         except: return None
-        value = questions[id][choice] 
+        try: value = questions[id][choice] 
+        except IndexError: print("Index out of range. Probably not enough questions in questions.json.")
         # questions[id].pop(choice) # I think this is the line that is causing the problem.
         return value
     else:
@@ -726,11 +727,12 @@ def guide():
         case _: 
             for value in lessons[ID]["lessons"].values():
                 if value != Lesson.LessonStages.Stage_3.value: return "Unknown Error in guide route. <i>(Hint no context)</i>", 404
-            return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
+            return render_template("congrats.html", title = webpage_title)
+            # return "Congratulations! You have completed all the lessons.", 200 # This is a placeholder solution.
         
 @app.route('/')
 def index():
-    if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user(), Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
+    if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user()) # Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title), 200
 
 @app.route('/favicon.ico')
