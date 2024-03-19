@@ -8,7 +8,8 @@
 
 <p>This is spaghetti code.</p>
 
-<div><img src="#"></div>
+<div><img src="<a href="https://ibb.co/kDbxvSq"><img src="https://i.ibb.co/C9CzDHV/3-A296-B18-FF51-4-C70-A918-6-CD03-B03-E11-C.jpg" alt="3-A296-B18-FF51-4-C70-A918-6-CD03-B03-E11-C" border="0"></a>
+"></div>
 
 <p>OOP fixes all this</p>
 
