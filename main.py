@@ -735,6 +735,10 @@ def index():
     if current_user.is_authenticated: return render_template('home.html', title = webpage_title, ReccomendedUser=get_random_user()) # Name=f"{current_user.name.split(' ')[0]} {current_user.name.split(' ')[-1][0]}.")
     else: return render_template('index.html', title = webpage_title), 200
 
+@app.route('/settings')
+def settings():
+    return render_template('settings.html', title = webpage_title)
+
 @app.route('/favicon.ico')
 def favicon():
     return redirect(url_for('static', filename='favicon.ico'))
