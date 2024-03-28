@@ -1,66 +1,137 @@
-<div><p>OOP otherwise known as object oriented programming can be very beneficial in software development.</p>
+# Introduction to Object Oriented Programming (OOP)
 
-<p>Before OOP we had procedural programming, a bunch of data stored in variables and functions operating using that data</p>
+<br>
 
-<p>The big issue is that the bigger a program grows the more functions it will have resulting in copying lines of code over and over again.</p>
+OOP otherwise known as Object Oriented Programming is a programming paradigm (model) based on a concept called Objects.
 
-<p>When you made a change in one function, sometimes the other functions would end up breaking.</p>
+<br>
 
-<p>This is spaghetti code.</p>
+*We will be using OOP to refer to Object Oriented Programming in this lesson.*
 
-<div><img src="<a href="https://ibb.co/kDbxvSq"><img src="https://i.ibb.co/C9CzDHV/3-A296-B18-FF51-4-C70-A918-6-CD03-B03-E11-C.jpg" alt="3-A296-B18-FF51-4-C70-A918-6-CD03-B03-E11-C" border="0"></a>
-"></div>
+<br>
 
-<p>OOP fixes all this</p>
+Prior to this lesson we used a different programming paradigm called procedural programming where data is stored individually in an unorganized manner.
 
-<p>how it works is by combining related groups of variables and functions into a "unit"</p>
+<br>
 
-<p>We call this "unit" an Object</p>
+This could potentially create a massive headache for developors working on larger projects.
 
-<p>We now refer to the variables in the object as properties and the functions in the object as methods</p>
+<br>
 
-<p>Take a Ponder: Why do you think this would be better than functions all over the place?</p>
+## The basics of OOP
 
-<p>There are four key concepts in OOP</p>
+<br>
 
-<p>Encapsulation</p>
+There are four basic concepts that pertain to objects.
 
-<p>Abstraction</p>
+<br>
 
-<p>Inheritance</p>
+1. Properties
+2. Methods
+3. Inheritence
+4. Polymorphism
 
-<p>Polymorphism</p>
+<br>
 
-<p>Encapsulation </p>
+### Properties
 
-<p>Encapsulation is grouping related variables and functions into objects, simplifying code.</p>
+<br>
 
-<p>The reason this is so useful is because it allows our functions to have fewer and fewer parameters.</p>
+Properties are quite simple to understand.
 
-<p>The fewer parameters there are in a function the easier the code becomes to maintain and use</p>
+<br>
 
-<p>Abstraction</p>
+Properties are the actual data within an object.
 
-<p>Abstraction hides complex details, making interfaces simpler and changes easier. </p>
+<br>
 
-<p>A simpler interface means that things will become easier to understand</p>
+*Another way to think about properties is as the "variables" of the object.*
 
-<p>it can make changes easier because now whenever you change something none of it will impact the rest of the program's code.</p>
+<br>
 
-<p>This is also known as reducing the impact of change</p>
+```swift
+class User {
+    var username: String // This is a username property
+    var password: String // This is a password property
+}
+```
 
-<p>Inheritance</p>
+<br>
 
-<p>Inheritance avoids repetition by letting objects inherit properties and methods from others. </p>
+### Methods
 
-<p>instead of defining something every time you have a new element instead you define them once in a generic object and then let the other objects inherit the properties and methods eliminating repetitive code</p>
+<br>
 
-<p>Polymorphism</p>
+Methods are also quite simple to understand.
 
-<p>Polymorphism allows different objects to be treated similarly, simplifying code further.</p>
+<br>
 
-<p> It allows you to write code that can work with many different types of objects without knowing their exact type beforehand.</p>
+Methods are functions within an object.
 
-<p>This makes your code more flexible and easier to use.</p>
+<br>
 
-</div>
+```swift
+class User {
+    var username: String // This is a username property
+    var password: String // This is a password property
+
+    // Init Method
+    init(username: String, password: String) {
+        self.username = username
+        self.password = password
+    }
+
+    // Login Method
+    func login() {
+        print("\(username) has logged in with password \(password)")
+        return
+    }
+}
+```
+
+<br>
+
+#### Initialization Methods
+
+<br>
+
+An Initialization method (or "`init` method" for short) is a method to setup an object.
+
+<!-- Add more about Initialization -->
+
+<br>
+
+## Inheritence
+
+<br>
+
+Inheritence allows objects to adopt properties from or even base themselves from another object.
+
+<br>
+
+<img src="/gallery/oop/dog-tree.png" width="512" height="512">
+
+<!--
+class User {
+    var username: String = "a" // This is a username property
+    var password: String = "a" // This is a password property
+
+    /*
+    init(username: String, password: String) {
+        self.username = username
+        self.password = password
+    }
+    */
+
+    func login() {
+        print("\(username) has logged in with password \(String(repeating: "*", count: password.count))")
+        return
+    }
+}
+
+
+let User1 = User() // (username: "Alice", password: "1234")
+let User2 = User() // (username: "Bob", password: "5678")
+User1.login()
+User2.login()
+-->

@@ -88,13 +88,13 @@
             <div class="flex inline-flex p-6">
                 <p class="italic text-md">This article is also offered in:</p>
                 {% if "ru" in language_list %}
-                <a href="article/ru"><b class="pl-2">Русский</b></a>
+                <a href="{{ article_key }}/ru"><b class="pl-2">Русский</b></a>
                 {% endif %}
                 {% if "ar" in language_list %}
-                <a href="article/ar"><b class="pl-2">العربية</b></a>
+                <a href="{{ article_key }}/ar"><b class="pl-2">العربية</b></a>
                 {% endif %}
                 {% if "zh" in language_list %}
-                <a href="article/zh"><b class="pl-2">中文</b></a>
+                <a href="{{ article_key }}/zh"><b class="pl-2">中文</b></a>
                 {% endif %}
             </div>
             {% endif %}

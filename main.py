@@ -328,7 +328,7 @@ def article(article_name, language = "en"):
     ## if contents == None:
     output = markdown.markdown(contents, extensions=['fenced_code', 'sane_lists', 'nl2br'])
     output = treat(output, config['vapor_username'])
-    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list, ffcheck = ffcheck)
+    return render_template('article.html', title = article_title, date = article_time, name = article_author, contents = output, language = language, language_list = language_list, ffcheck = ffcheck, article_key = article_name)
 
 testObject = {
     "expect": {
